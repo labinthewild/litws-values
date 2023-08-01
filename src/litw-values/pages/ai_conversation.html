@@ -1,0 +1,149 @@
+<!-- Template for instructions page -->
+
+<h2 class="bolded-blue" data-i18n="study-convo-title"></h2>
+	<p data-i18n="study-convo-instructions"></p>
+    <div class="col-5">
+        <div id="start_div">
+            <button type="button" class="btn btn-primary" onclick="convo_start()" data-i18n="study-convo-start-btn"></button>
+        </div>
+        <div id="convo_div" class="hidden">
+            <div id="convbox" class="container bg-light overflow-auto">
+                <div id="intro">
+                    <div id="intro_snippet" class="col-8 robot-bg message-cloud p-2">
+                        <div id="intro_message" data-i18n="study-convo-start"></div>
+                        <div id="intro_sent" class="small_ai" data-i18n="study-convo-by_ai"></div>
+                        <div id="intro_loading" class="lds-ellipsis lds-robot"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                </div>
+                <div id="convo_thread"></div>
+                <div id="bye">
+                    <div id="bye_snippet" class="col-8 robot-bg message-cloud p-2 hidden">
+                        <div id="bye_message" data-i18n="study-convo-end"></div>
+                        <div id="bye_sent" class="small_ai" data-i18n="study-convo-by_ai"></div>
+                        <div id="bye_loading" class="lds-ellipsis lds-robot"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                </div>
+            </div>
+            <!--div id="typebox" class="container bg-light mb-3">
+                <div class="row">
+                    <div class="col-12 rounded p-2">
+                        <div class="rounded px-2 py-1" style="border:2px inset #AAA;">
+                            <div id="snippettype"></div>
+                        </div>
+                    </div>
+                </div>
+            </div-->
+            <div id="questions" class="gap-2 hidden">
+                <button id="button_q1" type="button" class="btn btn-primary" onclick="question_chosen(1)">B1</button>
+                <button id="button_q2" type="button" class="btn btn-primary" onclick="question_chosen(2)">B2</button>
+                <button id="button_q3" type="button" class="hidden btn btn-secondary" onclick="question_chosen(FINAL_CONVO_VAL)" data-i18n="study-convo-done-btn"></button>
+            </div>
+
+        </div>
+    </div>
+
+<script>
+    const MSG_TIMEOUT = 1500;
+    const FINAL_CONVO_VAL = 3;
+    const MIN_CONVO_SIZE = LITW.study.params.convo_length_min;
+    let convos = LITW.study.params.convo_snippets;
+    let current_convo = 1;
+    let user_interrupted_convo = false;
+    let convo_data = {};
+
+    let show_message = function (msg_id, take_time=MSG_TIMEOUT, callback) {
+        return new Promise(function(resolve, reject) {
+            $(`#${msg_id}_snippet`).show().delay(take_time/3).animate({opacity: 1}, take_time/10);
+            $(`#${msg_id}_snippet`)[0].scrollIntoView();
+            setTimeout(function () {
+                $(`#${msg_id}_loading`).fadeOut(take_time/3, function () {
+                    $(`#${msg_id}_message`).fadeIn(take_time/3);
+                    $(`#${msg_id}_sent`).fadeIn(take_time/3);
+                });
+                callback();
+            }, take_time);
+        });
+    };
+
+    let add_convo = function (q_id, q_string, a_id, a_string) {
+        $('#convo_thread').append(`<div id="${q_id}" class="pt-4"></div>`);
+        $(`#${q_id}`).append(`<div id="${q_id}_snippet" class="col-8 human-bg message-cloud p-2 offset-4 hidden"></div>`);
+        $(`#${q_id}_snippet`).append(`<div id="${q_id}_message" class="hidden">${q_string}</div>`);
+        $(`#${q_id}_snippet`).append(`<div id="${q_id}_sent" class="small_human">${$.i18n('study-convo-by_you')}</div>`);
+        $(`#${q_id}_snippet`).append(`<div id="${q_id}_loading" class="lds-ellipsis lds-human"><div></div><div></div><div></div><div></div></div>`);
+        $('#convo_thread').append(`<div id="${a_id}" class="pt-4 pb-4"></div>`);
+        $(`#${a_id}`).append(`<div id="${a_id}_snippet" class="col-8 robot-bg message-cloud p-2 hidden"></div>`);
+        $(`#${a_id}_snippet`).append(`<div id="${a_id}_message" class="hidden">${a_string}</div>`);
+        $(`#${a_id}_snippet`).append(`<div id="${a_id}_sent" class="small_ai">${$.i18n('study-convo-by_ai')}</div>`);
+        $(`#${a_id}_snippet`).append(`<div id="${a_id}_loading" class="lds-ellipsis lds-robot"><div></div><div></div><div></div><div></div></div>`);
+    }
+
+    let req_question = function () {
+        let q1 = convos[current_convo-1]['q1'];
+        let q2 = convos[current_convo-1]['q2'];
+        convo_data[current_convo] = {};
+        convo_data[current_convo]['choice1'] = convos[current_convo-1]['q1_id'];
+        convo_data[current_convo]['choice2'] = convos[current_convo-1]['q2_id'];
+
+        $('#button_q1').text(q1);
+        $('#button_q2').text(q2);
+        $('#questions').css('display', 'grid');
+        if (current_convo > MIN_CONVO_SIZE){
+            $('#button_q3').show();
+        }
+        $('#questions')[0].scrollIntoView();
+    }
+
+    let question_chosen = function( choice_num ) {
+        convo_data[current_convo]['selection'] = choice_num;
+        let convo_q_id = `q${current_convo}`;
+        let convo_q = convos[current_convo-1][`q${choice_num}`];
+        let convo_a_id = `a${current_convo}`;
+        let convo_a = convos[current_convo-1][`a${choice_num}`];
+        if (choice_num==FINAL_CONVO_VAL) {
+            convo_q = $.i18n('study-convo-end');
+            convo_a = $.i18n('study-convo-end_a');
+            user_interrupted_convo = true;
+        }
+        add_convo(convo_q_id, convo_q, convo_a_id, convo_a);
+        //TODO: this is creating a not so pleasant UX where the screen moves up with no need!
+        $('#questions').hide();
+        show_message(convo_q_id, MSG_TIMEOUT, function (){
+        }).then( function () {
+            setTimeout(function () {
+                show_message(convo_a_id, MSG_TIMEOUT, function (){
+                    next_step();
+                })
+            }, MSG_TIMEOUT);
+        }());
+    }
+
+    let next_step = function (){
+        if(user_interrupted_convo){
+            end_convo();
+        } else {
+            current_convo+=1;
+            if (current_convo <= convos.length) {
+                req_question();
+            } else {
+                show_message('bye', MSG_TIMEOUT, function (){
+                    end_convo();
+                })
+            }
+        }
+    }
+
+    let end_convo = function (){
+        LITW.study.params['convo_data']=convo_data;
+        //TODO: We need a new LITW.utils that only shows, but doesn't configure the next button!!!!
+        $('#btn-next-page').attr('style', 'display:block;');
+        $('#btn-next-page')[0].scrollIntoView();
+    }
+
+    let convo_start = function (){
+        $('#start_div').hide();
+        $('#convo_div').show();
+        show_message("intro", MSG_TIMEOUT, req_question);
+    };
+</script>
+

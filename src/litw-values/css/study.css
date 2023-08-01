@@ -1,0 +1,206 @@
+    .vizlinks {
+        color:#0d47a1;
+        font-size: 0.9rem;
+    }
+    .highlight {
+        background-color: yellow;
+    }
+    #title-space {
+        border-bottom: 2px solid black;
+    }
+
+    #snippeti {
+        opacity: 0;
+    }
+
+    #snippetq {
+        opacity: 0;
+    }
+
+    #snippeta {
+        opacity: 0;
+    }
+
+    #messagei {
+        display: none;
+    }
+
+    #messageq {
+        display: none;
+    }
+
+    #messagea {
+        display: none;
+    }
+
+    #nextbutton {
+        display: none;
+    }
+
+    .small_ai {
+        font-size: 9pt;
+        color: #888;
+        display: none;
+    }
+
+    .small_human {
+        font-size: 9pt;
+        color: #ffffff;
+        display: none;
+    }
+
+    #sentq {
+        float: right;
+        color: #fff;
+    }
+
+    .robot-bg,.human-bg {
+        margin-top: 20px;
+        padding: 5px 9px;
+        max-width: 50%;
+        clear: both;
+        position: relative;
+    }
+
+
+    .robot-bg {
+        float: left;
+        margin-right: auto;
+        -webkit-border-radius: 15px 15px 15px 0px;
+        -moz-border-radius: 15px 15px 15px 0px;
+        -o-border-radius: 15px 15px 15px 0px;
+        -ms-border-radius: 15px 15px 15px 0px;
+        border-radius: 15px 15px 15px 0px;
+        background-color: #e0e0e0;
+        color: #333;
+    }
+
+    .robot-bg:before {
+        border-bottom: 10px solid #e0e0e0;
+        border-left: 9px solid rgba(0, 0, 0, 0);
+        position: absolute;
+        bottom: 0;
+        left: -8px;
+        content: "";
+    }
+
+    .human-bg {
+        float: right;
+        margin-left: auto;
+        /* text-align: right; */
+        -webkit-border-radius: 15px 15px 0px 15px;
+        -moz-border-radius: 15px 15px 0px 15px;
+        -o-border-radius: 15px 15px 0px 15px;
+        -ms-border-radius: 15px 15px 0px 15px;
+        border-radius: 15px 15px 0px 15px;
+        background-color: #07D;
+        color: white;
+    }
+
+    .human-bg:before {
+        border-bottom: 9px solid #07D;
+        border-right: 9px solid rgba(0, 0, 0, 0);
+        position: absolute;
+        bottom: 0;
+        right: -8px;
+        content: "";
+    }
+
+    #convbox {
+        border: solid 2px #777;
+        margin: 10px;
+        height: 600px;
+        width: 500px;
+    }
+
+    #convbox .row {
+
+    }
+
+    #typebox {
+        border: solid 2px #777;
+        width: 500px;
+    }
+
+    #questions {
+        width: 500px;
+    }
+
+    .lds-ellipsis {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 21px;
+    }
+
+    .lds-robot div {
+        position: absolute;
+        top: 4px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #555;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    }
+
+    .lds-human div {
+        position: absolute;
+        top: 4px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #fff;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    }
+
+    .lds-ellipsis div:nth-child(1) {
+        left: 8px;
+        animation: lds-ellipsis1 0.6s infinite;
+    }
+
+    .lds-ellipsis div:nth-child(2) {
+        left: 8px;
+        animation: lds-ellipsis2 0.6s infinite;
+    }
+
+    .lds-ellipsis div:nth-child(3) {
+        left: 32px;
+        animation: lds-ellipsis2 0.6s infinite;
+    }
+
+    .lds-ellipsis div:nth-child(4) {
+        left: 56px;
+        animation: lds-ellipsis3 0.6s infinite;
+    }
+
+    .hyperparameter-label {
+        font-size: 0.9rem;
+        color:#777
+    }
+
+    @keyframes lds-ellipsis1 {
+        0% {
+            transform: scale(0);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes lds-ellipsis3 {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(0);
+        }
+    }
+
+    @keyframes lds-ellipsis2 {
+        0% {
+            transform: translate(0, 0);
+        }
+        100% {
+            transform: translate(24px, 0);
+        }
+    }
