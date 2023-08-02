@@ -40,7 +40,7 @@ module.exports = (function(exports) {
 	var timeline = [],
 	params = {
 		currentProgress: 0,
-		preLoad: ["img/btn-next.png","img/btn-next-active.png","img/ajax-loader.gif"],
+		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif"],
 		participant_values: {},
 		values_data: null,
 		convo_data: null,
@@ -73,18 +73,17 @@ module.exports = (function(exports) {
 	// 	// ******* BEGIN STUDY PROGRESSION ******** //
 	//
 	// 	//DEMOGRAPHICS
-	// 	timeline.push({
-    //         type: "display-slide",
-    //         template: demographicsTemplate,
-    //         display_element: $("#demographics"),
-    //         name: "demographics",
-    //         finish: function(){
-    //         	var dem_data = $('#demographicsForm').alpaca().getValue();
-	// 			dem_data['time_elapsed'] = getSlideTime();
-    //         	jsPsych.data.addProperties({demographics:dem_data});
-    //         	LITW.data.submitDemographics(dem_data);
-    //         }
-    //     });
+		timeline.push({
+            type: "display-slide",
+            template: demographicsTemplate,
+            display_element: $("#demographics"),
+            name: "demographics",
+            finish: function(){
+            	var dem_data = $('#demographicsForm').alpaca().getValue();
+				dem_data['time_elapsed'] = getSlideTime();
+            	LITW.data.submitDemographics(dem_data);
+            }
+        });
 	//
 	//
 	// 	// VALUES QUESTIONNAIRE
