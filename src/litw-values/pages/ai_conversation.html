@@ -108,10 +108,10 @@
         add_convo(convo_q_id, convo_q, convo_a_id, convo_a);
         //TODO: this is creating a not so pleasant UX where the screen moves up with no need!
         $('#questions').hide();
-        show_message(convo_q_id, MSG_TIMEOUT, function (){
+        show_message(convo_q_id, MSG_TIMEOUT-500, function (){
         }).then( function () {
             setTimeout(function () {
-                show_message(convo_a_id, MSG_TIMEOUT, function (){
+                show_message(convo_a_id, MSG_TIMEOUT+500, function (){
                     next_step();
                 })
             }, MSG_TIMEOUT);

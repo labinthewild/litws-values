@@ -50,6 +50,7 @@ module.exports = (function(exports) {
 		convo_snippets: []
 	};
 
+	//TODO: move IRB to a slide as all other ones!
 	function showIRB(afterIRBFunction) {
 		LITW.tracking.recordCheckpoint("irb");
 		$("#irb").html(irbTemplate());
@@ -73,17 +74,17 @@ module.exports = (function(exports) {
 	// 	// ******* BEGIN STUDY PROGRESSION ******** //
 	//
 	// 	//DEMOGRAPHICS
-		timeline.push({
-            type: "display-slide",
-            template: demographicsTemplate,
-            display_element: $("#demographics"),
-            name: "demographics",
-            finish: function(){
-            	var dem_data = $('#demographicsForm').alpaca().getValue();
-				dem_data['time_elapsed'] = getSlideTime();
-            	LITW.data.submitDemographics(dem_data);
-            }
-        });
+	// 	timeline.push({
+    //         type: "display-slide",
+    //         template: demographicsTemplate,
+    //         display_element: $("#demographics"),
+    //         name: "demographics",
+    //         finish: function(){
+    //         	var dem_data = $('#demographicsForm').alpaca().getValue();
+	// 			dem_data['time_elapsed'] = getSlideTime();
+    //         	LITW.data.submitDemographics(dem_data);
+    //         }
+    //     });
 	//
 	//
 	// 	// VALUES QUESTIONNAIRE
@@ -103,39 +104,39 @@ module.exports = (function(exports) {
 	//
 	//
 	// 	// AI CONVERSATION
-	// 	for (let counter = 0; counter < params.convo_length_max; counter++ ){
-	// 		let num1 = Math.floor(Math.random() * params.convo_data.length);
-	// 		let num2 = num1;
-	// 		while(num1 == num2){
-	// 			num2 = Math.floor(Math.random() * params.convo_data.length);
-	// 		}
-	// 		let convo1 = params.convo_data[num1];
-	// 		let convo2 = params.convo_data[num2];
-	// 		params.convo_snippets.push({
-	// 			q1_id: convo1.QID,
-	// 			q1:convo1.snippetq,
-	// 			a1:convo1.snippeta,
-	// 			q2_id: convo2.QID,
-	// 			q2:convo2.snippetq,
-	// 			a2:convo2.snippeta
-	// 		});
-	// 	}
-	// 	timeline.push({
-    //         type: "display-slide",
-	// 		display_next_button: false,
-    //         template: conversationTemplate(),
-    //         display_element: $("#ai_convo"),
-    //         name: "ai_conversation",
-    //         finish: function(){
-	// 			var convo_data = {
-	// 				convo: params.convo_data,
-	// 				time_elapsed: getSlideTime()
-	// 			}
-    //         	LITW.data.submitStudyData(convo_data);
-    //         }
-    //     });
-	//
-	//
+		for (let counter = 0; counter < params.convo_length_max; counter++ ){
+			let num1 = Math.floor(Math.random() * params.convo_data.length);
+			let num2 = num1;
+			while(num1 == num2){
+				num2 = Math.floor(Math.random() * params.convo_data.length);
+			}
+			let convo1 = params.convo_data[num1];
+			let convo2 = params.convo_data[num2];
+			params.convo_snippets.push({
+				q1_id: convo1.QID,
+				q1:convo1.snippetq,
+				a1:convo1.snippeta,
+				q2_id: convo2.QID,
+				q2:convo2.snippetq,
+				a2:convo2.snippeta
+			});
+		}
+		timeline.push({
+            type: "display-slide",
+			display_next_button: false,
+            template: conversationTemplate,
+            display_element: $("#ai_convo"),
+            name: "ai_conversation",
+            finish: function(){
+				var convo_data = {
+					convo: params.convo_data,
+					time_elapsed: getSlideTime()
+				}
+            	LITW.data.submitStudyData(convo_data);
+            }
+        });
+
+
 	// 	// IMPRESSIONS QUESTIONNAIRE
 	// 	timeline.push({
     //         type: "display-slide",
