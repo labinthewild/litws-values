@@ -4,7 +4,7 @@
         <br>
     </div>
 </div>
-<form id="impressionsForm" style="text-align: left">
+<form id="impressionsForm" style="text-align: left; display: none">
     <div class="mb-3 litw-form-mb3" id="q1">
         <label class="form-label" data-i18n="study-values-impressions-q1"></label>
         <div class="d-flex litw-flex-orientation">
@@ -172,8 +172,6 @@
             <span class="litw-form-label" data-i18n="study-values-impressions-r_vm"></span>
         </div>
     </div>
-
-
 </form>
 
 <script type="text/javascript">
@@ -186,4 +184,20 @@ function psq_optionClicked(question_number) {
         LITW.study.params.impressions_data = quest_answers;
     }
 }
+
+function shuffleFormQuestions(formID, questionsClass, callback) {
+    let shuffled_q = LITW.utils.shuffleArrays($(`.${questionsClass}`));
+    let formJQ = `#${formID}`
+    $(formJQ).html('');
+    for(let question of shuffled_q) {
+        $(formJQ).html($(formJQ).html() + question.outerHTML);
+    }
+    callback();
+}
+
+$(document).ready(function() {
+    shuffleFormQuestions('impressionsForm', 'litw-form-mb3', function(){
+        $('#impressionsForm').show();
+    });
+});
 </script>

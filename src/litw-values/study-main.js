@@ -104,54 +104,54 @@ module.exports = (function(exports) {
 	//
 	//
 	// 	// AI CONVERSATION
-		for (let counter = 0; counter < params.convo_length_max; counter++ ){
-			let num1 = Math.floor(Math.random() * params.convo_data.length);
-			let num2 = num1;
-			while(num1 == num2){
-				num2 = Math.floor(Math.random() * params.convo_data.length);
-			}
-			let convo1 = params.convo_data[num1];
-			let convo2 = params.convo_data[num2];
-			params.convo_snippets.push({
-				q1_id: convo1.QID,
-				q1:convo1.snippetq,
-				a1:convo1.snippeta,
-				q2_id: convo2.QID,
-				q2:convo2.snippetq,
-				a2:convo2.snippeta
-			});
-		}
-		timeline.push({
-            type: "display-slide",
-			display_next_button: false,
-            template: conversationTemplate,
-            display_element: $("#ai_convo"),
-            name: "ai_conversation",
-            finish: function(){
-				var convo_data = {
-					convo: params.convo_data,
-					time_elapsed: getSlideTime()
-				}
-            	LITW.data.submitStudyData(convo_data);
-            }
-        });
+	// 	for (let counter = 0; counter < params.convo_length_max; counter++ ){
+	// 		let num1 = Math.floor(Math.random() * params.convo_data.length);
+	// 		let num2 = num1;
+	// 		while(num1 == num2){
+	// 			num2 = Math.floor(Math.random() * params.convo_data.length);
+	// 		}
+	// 		let convo1 = params.convo_data[num1];
+	// 		let convo2 = params.convo_data[num2];
+	// 		params.convo_snippets.push({
+	// 			q1_id: convo1.QID,
+	// 			q1:convo1.snippetq,
+	// 			a1:convo1.snippeta,
+	// 			q2_id: convo2.QID,
+	// 			q2:convo2.snippetq,
+	// 			a2:convo2.snippeta
+	// 		});
+	// 	}
+	// 	timeline.push({
+    //         type: "display-slide",
+	// 		display_next_button: false,
+    //         template: conversationTemplate,
+    //         display_element: $("#ai_convo"),
+    //         name: "ai_conversation",
+    //         finish: function(){
+	// 			var convo_data = {
+	// 				convo: params.convo_data,
+	// 				time_elapsed: getSlideTime()
+	// 			}
+    //         	LITW.data.submitStudyData(convo_data);
+    //         }
+    //     });
 
 
 	// 	// IMPRESSIONS QUESTIONNAIRE
-	// 	timeline.push({
-    //         type: "display-slide",
-    //         template: impressionsTemplate,
-	// 		display_next_button: false,
-    //         display_element: $("#impressions"),
-    //         name: "impressions",
-    //         finish: function(){
-    //         	let impressions_data = {
-	// 				impressions: params.impressions_data,
-	// 				time_elapsed: getSlideTime()
-	// 			}
-    //         	LITW.data.submitStudyData(impressions_data);
-    //         }
-    //     });
+		timeline.push({
+            type: "display-slide",
+            template: impressionsTemplate,
+			display_next_button: false,
+            display_element: $("#impressions"),
+            name: "impressions",
+            finish: function(){
+            	let impressions_data = {
+					impressions: params.impressions_data,
+					time_elapsed: getSlideTime()
+				}
+            	LITW.data.submitStudyData(impressions_data);
+            }
+        });
 	//
 	// 	//COMMENTS
 	// 	timeline.push({
