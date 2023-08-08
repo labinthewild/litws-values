@@ -50,35 +50,29 @@ module.exports = (function(exports) {
 		convo_snippets: []
 	};
 
-	//TODO: move IRB to a slide as all other ones!
-	function showIRB(afterIRBFunction) {
-		LITW.tracking.recordCheckpoint("irb");
-		$("#irb").html(irbTemplate());
-		$("#irb").i18n();
-		LITW.utils.showSlide("irb");
-		$("#agree-to-study").on("click", function() {
-			if ($(this).prop("checked")) {
-				LITW.utils.showNextButton(afterIRBFunction);
-				$("#approve-irb").hide();
-			} else {
-				LITW.utils.hideNextButton();
-				$("#approve-irb").show();
-			}
-		});
-
-		// show the introductory splash screen
-		$("#splash-screen").modal({backdrop: "static"});
-	}
 
 	function configureStudy() {
 	// 	// ******* BEGIN STUDY PROGRESSION ******** //
+		timeline.push({
+            name: "informed_consent",
+            type: "display-slide",
+            template: irbTemplate,
+            display_element: $("#irb"),
+            display_next_button: false,
+            finish: function(){
+            	let irb_data = {
+					time_elapsed: getSlideTime()
+				}
+            	LITW.data.submitConsent(irb_data);
+            }
+        });
 	//
 	// 	//DEMOGRAPHICS
 	// 	timeline.push({
-    //         type: "display-slide",
+    //         name: "demographics",
+	//         type: "display-slide",
     //         template: demographicsTemplate,
     //         display_element: $("#demographics"),
-    //         name: "demographics",
     //         finish: function(){
     //         	var dem_data = $('#demographicsForm').alpaca().getValue();
 	// 			dem_data['time_elapsed'] = getSlideTime();
@@ -89,10 +83,10 @@ module.exports = (function(exports) {
 	//
 	// 	// VALUES QUESTIONNAIRE
 	// 	timeline.push({
+    //         name: "values",
     //         type: "display-slide",
     //         template: valuesTemplate,
     //         display_element: $("#values"),
-    //         name: "values",
     //         finish: function(){
     //         	var values_data = {
 	// 				values: params.values_data,
@@ -122,11 +116,11 @@ module.exports = (function(exports) {
 	// 		});
 	// 	}
 	// 	timeline.push({
+    //         name: "ai_conversation",
     //         type: "display-slide",
-	// 		display_next_button: false,
+	// 		   display_next_button: false,
     //         template: conversationTemplate,
     //         display_element: $("#ai_convo"),
-    //         name: "ai_conversation",
     //         finish: function(){
 	// 			var convo_data = {
 	// 				convo: params.convo_data,
@@ -139,11 +133,11 @@ module.exports = (function(exports) {
 
 	// 	// IMPRESSIONS QUESTIONNAIRE
 		timeline.push({
+            name: "ai_impressions",
             type: "display-slide",
             template: impressionsTemplate,
 			display_next_button: false,
             display_element: $("#impressions"),
-            name: "impressions",
             finish: function(){
             	let impressions_data = {
 					impressions: params.impressions_data,
