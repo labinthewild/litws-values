@@ -6,7 +6,9 @@
     "locale": "en",
     "message-documentation": "qqq"
   },
-  "litw-template-title": "How would you get along with an AI?",
+  "litw-study-title": "How would you get along with an AI?",
+  "litw-study-description": "Test how well you would work with an AI partner...",
+  "litw-study-intro-button": "Start now!",
   "litw-irb-header": "How would you get along with an AI?",
   "litw-irb-subheader-1": "Please read the following information carefully before proceeding.",
   "litw-irb-subheader-2": "You will be shown a conversational snippet where a user interacts with a chatbot. The user asks a question from a survey to which the chatbot will respond subjectively. Your task is to answer the survey objectively on behalf of the chatbot. You will also be asked how much you personally agree with the chatbot.",
