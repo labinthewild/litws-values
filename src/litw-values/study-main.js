@@ -25,6 +25,7 @@ var demographicsTemplate = require("./pages/demographics.html");
 var valuesTemplate = require("./pages/values.html");
 var conversationTemplate = require("./pages/ai_conversation.html");
 var impressionsTemplate = require("./pages/postStudyQuest.html");
+var taskInstructionsTemplate = require("./pages/instructions.html");
 var loadingTemplate = require("./pages/loading.html");
 var progressTemplate = require("./pages/progress.html");
 var commentsTemplate = require("./pages/comments.html");
@@ -47,131 +48,153 @@ module.exports = (function(exports) {
 		impressions_data: null,
 		convo_length_max: 10,
 		convo_length_min: 2,
-		convo_snippets: []
+		convo_snippets: [],
+		ai_impressions_before_task: false,
+		slides: {
+			IRB: {
+				name: "informed_consent",
+				type: "display-slide",
+				template: irbTemplate,
+				display_element: $("#irb"),
+				display_next_button: false,
+				finish: function(){
+					let irb_data = {
+						time_elapsed: getSlideTime()
+					}
+					LITW.data.submitConsent(irb_data);
+				}
+			},
+			DEMOGRAPHICS: {
+				name: "demographics",
+				type: "display-slide",
+				template: demographicsTemplate,
+				display_element: $("#demographics"),
+				finish: function(){
+					let dem_data = $('#demographicsForm').alpaca().getValue();
+					dem_data['time_elapsed'] = getSlideTime();
+					LITW.data.submitDemographics(dem_data);
+				}
+			},
+			VALUES_Q: {
+				name: "values_questionnaire",
+				type: "display-slide",
+				template: valuesTemplate,
+				display_element: $("#values"),
+				finish: function(){
+					let values_data = {
+						values: params.values_data,
+						time_elapsed: getSlideTime()
+					}
+					LITW.data.submitStudyData(values_data);
+				}
+			},
+			AI_CONVO: {
+				name: "ai_conversation",
+				type: "display-slide",
+				template: conversationTemplate,
+				display_next_button: false,
+				display_element: $("#ai_convo"),
+				finish: function(){
+					let convo_data = {
+						convo: params.convo_data,
+						time_elapsed: getSlideTime()
+					}
+					LITW.data.submitStudyData(convo_data);
+				}
+			},
+			AI_IMPRESSIONS: {
+				name: "ai_impressions",
+				type: "display-slide",
+				template: impressionsTemplate,
+				display_next_button: false,
+				display_element: $("#impressions"),
+				finish: function(){
+					let impressions_data = {
+						impressions: params.impressions_data,
+						time_elapsed: getSlideTime()
+					}
+					LITW.data.submitStudyData(impressions_data);
+				}
+			},
+			TASK_INSTRUCTIONS: {
+				name: "task_instructions",
+				type: "display-slide",
+				template: taskInstructionsTemplate,
+				display_next_button: true,
+				display_element: $("#task"),
+				finish: function(){
+					let slide_data = {
+						time_elapsed: getSlideTime()
+					}
+					LITW.data.submitStudyData(slide_data);
+				}
+			},
+			COMMENTS: {
+				name: "comments",
+				type: "display-slide",
+				display_element: $("#comments"),
+				template: commentsTemplate,
+				display_next_button: true,
+				finish: function(){
+					let comments = $('#commentsForm').alpaca().getValue();
+					if (Object.keys(comments).length > 0) {
+						comments['time_elapsed'] = getSlideTime();
+						LITW.data.submitComments(comments);
+					}
+				}
+			},
+			RESULTS: {
+				type: "call-function",
+				func: function(){
+					showResults();
+				}
+			}
+		}
 	};
 
 
 	function configureStudy() {
-	// 	// ******* BEGIN STUDY PROGRESSION ******** //
-		timeline.push({
-            name: "informed_consent",
-            type: "display-slide",
-            template: irbTemplate,
-            display_element: $("#irb"),
-            display_next_button: false,
-            finish: function(){
-            	let irb_data = {
-					time_elapsed: getSlideTime()
-				}
-            	LITW.data.submitConsent(irb_data);
-            }
-        });
-	//
-	// 	//DEMOGRAPHICS
-	// 	timeline.push({
-    //         name: "demographics",
-	//         type: "display-slide",
-    //         template: demographicsTemplate,
-    //         display_element: $("#demographics"),
-    //         finish: function(){
-    //         	var dem_data = $('#demographicsForm').alpaca().getValue();
-	// 			dem_data['time_elapsed'] = getSlideTime();
-    //         	LITW.data.submitDemographics(dem_data);
-    //         }
-    //     });
-	//
-	//
-	// 	// VALUES QUESTIONNAIRE
-	// 	timeline.push({
-    //         name: "values",
-    //         type: "display-slide",
-    //         template: valuesTemplate,
-    //         display_element: $("#values"),
-    //         finish: function(){
-    //         	var values_data = {
-	// 				values: params.values_data,
-	// 				time_elapsed: getSlideTime()
-	// 			}
-    //         	LITW.data.submitStudyData(values_data);
-    //         }
-    //     });
-	//
-	//
-	// 	// AI CONVERSATION
-	// 	for (let counter = 0; counter < params.convo_length_max; counter++ ){
-	// 		let num1 = Math.floor(Math.random() * params.convo_data.length);
-	// 		let num2 = num1;
-	// 		while(num1 == num2){
-	// 			num2 = Math.floor(Math.random() * params.convo_data.length);
-	// 		}
-	// 		let convo1 = params.convo_data[num1];
-	// 		let convo2 = params.convo_data[num2];
-	// 		params.convo_snippets.push({
-	// 			q1_id: convo1.QID,
-	// 			q1:convo1.snippetq,
-	// 			a1:convo1.snippeta,
-	// 			q2_id: convo2.QID,
-	// 			q2:convo2.snippetq,
-	// 			a2:convo2.snippeta
-	// 		});
-	// 	}
-	// 	timeline.push({
-    //         name: "ai_conversation",
-    //         type: "display-slide",
-	// 		   display_next_button: false,
-    //         template: conversationTemplate,
-    //         display_element: $("#ai_convo"),
-    //         finish: function(){
-	// 			var convo_data = {
-	// 				convo: params.convo_data,
-	// 				time_elapsed: getSlideTime()
-	// 			}
-    //         	LITW.data.submitStudyData(convo_data);
-    //         }
-    //     });
-
-
-	// 	// IMPRESSIONS QUESTIONNAIRE
-		timeline.push({
-            name: "ai_impressions",
-            type: "display-slide",
-            template: impressionsTemplate,
-			display_next_button: false,
-            display_element: $("#impressions"),
-            finish: function(){
-            	let impressions_data = {
-					impressions: params.impressions_data,
-					time_elapsed: getSlideTime()
-				}
-            	LITW.data.submitStudyData(impressions_data);
-            }
-        });
-	//
-	// 	//COMMENTS
-	// 	timeline.push({
-	// 		type: "display-slide",
-	// 		template: commentsTemplate,
-	// 		display_next_button: true,
-	// 		display_element: $("#comments"),
-	// 		name: "comments",
-	// 		finish: function(){
-	// 			var comments = $('#commentsForm').alpaca().getValue();
-	// 			if (Object.keys(comments).length > 0) {
-	// 				comments['time_elapsed'] = getSlideTime();
-	// 				LITW.data.submitComments(comments);
-	// 			}
-	// 		}
-	// 	});
-
-
-		//RESULTS
-		timeline.push({
-			type: "call-function",
-			func: function(){
-				showResults();
-			}
+		generateAIConversation();
+		params.ai_impressions_before_task = Math.random()>0.5;
+		LITW.data.submitStudyConfig({
+			ai_impressions_before_task: params.ai_impressions_before_task,
 		});
+
+		// ******* BEGIN STUDY PROGRESSION ******** //
+		// timeline.push(params.slides.IRB);
+		// timeline.push(params.slides.DEMOGRAPHICS);
+		// timeline.push(params.slides.VALUES_Q);
+		// timeline.push(params.slides.AI_CONVO);
+		if(params.ai_impressions_before_task) {
+			timeline.push(params.slides.AI_IMPRESSIONS);
+			timeline.push(params.slides.TASK_INSTRUCTIONS);
+		} else {
+			timeline.push(params.slides.TASK_INSTRUCTIONS);
+			timeline.push(params.slides.AI_IMPRESSIONS);
+		}
+		timeline.push(params.slides.COMMENTS);
+		timeline.push(params.slides.RESULTS);
 		// ******* END STUDY PROGRESSION ******** //
+	}
+
+	function generateAIConversation() {
+		for (let counter = 0; counter < params.convo_length_max; counter++ ){
+			let num1 = Math.floor(Math.random() * params.convo_data.length);
+			let num2 = num1;
+			while(num1 == num2){
+				num2 = Math.floor(Math.random() * params.convo_data.length);
+			}
+			let convo1 = params.convo_data[num1];
+			let convo2 = params.convo_data[num2];
+			params.convo_snippets.push({
+				q1_id: convo1.QID,
+				q1:convo1.snippetq,
+				a1:convo1.snippeta,
+				q2_id: convo2.QID,
+				q2:convo2.snippetq,
+				a2:convo2.snippeta
+			});
+		}
 	}
 
     function getSlideTime() {
@@ -251,10 +274,7 @@ module.exports = (function(exports) {
 		//TODO This methods should be something like act1().then.act2().then...
 		//... it is close enough to that... maybe the translation need to be encapsulated next.
 		// get initial data from database (maybe needed for the results page!?)
-		readSummaryData();
-
-		// detect touch devices
-		window.litwWithTouch = ("ontouchstart" in window);
+		//readSummaryData();
 
 		// determine and set the study language
 		$.i18n().locale = 'en'; //LITW.locale.getLocale();
@@ -273,7 +293,6 @@ module.exports = (function(exports) {
 						params.convo_data = data;
 						initStudy();
 						configureStudy();
-						//showIRB(startStudy);
 						startStudy();
 					});
 				},
