@@ -26,7 +26,7 @@ var demographicsTemplate = require("./pages/demographics.html");
 var valuesTemplate = require("./pages/values.html");
 var conversationTemplate = require("./pages/ai_conversation.html");
 var impressionsTemplate = require("./pages/postStudyQuest.html");
-var taskInstructionsTemplate = require("./pages/instructions.html");
+var taskTemplate = require("./pages/task_spacial.html");
 var loadingTemplate = require("./pages/loading.html");
 var progressTemplate = require("./pages/progress.html");
 var commentsTemplate = require("./pages/comments.html");
@@ -112,11 +112,11 @@ module.exports = (function(exports) {
 					LITW.data.submitStudyData(impressions_data);
 				}
 			},
-			TASK_INSTRUCTIONS: {
-				name: "task_instructions",
+			TASK: {
+				name: "task",
 				type: "display-slide",
-				template: taskInstructionsTemplate,
-				display_next_button: true,
+				template: taskTemplate,
+				display_next_button: false,
 				display_element: $("#task")
 			},
 			COMMENTS: {
@@ -152,18 +152,22 @@ module.exports = (function(exports) {
 		});
 
 		// ******* BEGIN STUDY PROGRESSION ******** //
-		timeline.push(params.slides.INTRO);
+		//timeline.push(params.slides.INTRO);
 		// timeline.push(params.slides.IRB);
 		// timeline.push(params.slides.DEMOGRAPHICS);
 		// timeline.push(params.slides.VALUES_Q);
 		// timeline.push(params.slides.AI_CONVO);
-		if(params.ai_impressions_before_task) {
-			timeline.push(params.slides.AI_IMPRESSIONS);
-			timeline.push(params.slides.TASK_INSTRUCTIONS);
-		} else {
-			timeline.push(params.slides.TASK_INSTRUCTIONS);
-			timeline.push(params.slides.AI_IMPRESSIONS);
-		}
+
+		//TODO: REMOVE - TASK added alone here for testing!
+		timeline.push(params.slides.TASK);
+
+		// if(params.ai_impressions_before_task) {
+		// 	timeline.push(params.slides.AI_IMPRESSIONS);
+		// 	timeline.push(params.slides.TASK);
+		// } else {
+		// 	timeline.push(params.slides.TASK);
+		// 	timeline.push(params.slides.AI_IMPRESSIONS);
+		// }
 		timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
 		// ******* END STUDY PROGRESSION ******** //

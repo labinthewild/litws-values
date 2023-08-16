@@ -1,0 +1,53 @@
+<!-- Template for instructions page -->
+
+<div class="instructions-stim-container">
+    <h2 class="bolded-blue" data-i18n="study-task-spacial-intro-header"></h2>
+    <p data-i18n="study-task-spacial-intro-p1"></p>
+    <p data-i18n="study-task-spacial-intro-p2"></p>
+    <div id="mrt-form">
+        <img id="mrt-q" src="./img/MRTStimuli/Q0-0.png" class="figure-img" alt="...">
+        <div id="mrt-answers" class="table-responsive">
+            <table class="table-borderless" style="margin: auto">
+                <tbody>
+                    <tr>
+                        <td><img id="mrt-a1" src="./img/MRTStimuli/Q0-1.png" class="border" alt="..."></td>
+                        <td><img id="mrt-a2" src="./img/MRTStimuli/Q0-2.png" class="border" alt="..."></td>
+                        <td><img id="mrt-a3" src="./img/MRTStimuli/Q0-3.png" class="border" alt="..."></td>
+                        <td><img id="mrt-a4" src="./img/MRTStimuli/Q0-4.png" class="border" alt="..."></td>
+                    </tr>
+                    <tr>
+                        <td><button id="btn1" type="button" class="btn btn-primary btn-lg" onclick="changeAnswerSelection(1)">1</button></td>
+                        <td><button id="btn2" type="button" class="btn btn-primary btn-lg" onclick="changeAnswerSelection(2)">2</button></td>
+                        <td><button id="btn3" type="button" class="btn btn-primary btn-lg" onclick="changeAnswerSelection(3)">3</button></td>
+                        <td><button id="btn4" type="button" class="btn btn-primary btn-lg" onclick="changeAnswerSelection(4)">4</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    let current_answer = [];
+    const MAX_ANSWERS = 2;
+
+    function changeAnswerSelection(value){
+        let value_position = current_answer.indexOf(value);
+        if (value_position !== -1) {
+            current_answer.splice(value_position, 1);
+            $(`#btn${value}`).removeClass('active');
+            $(`#mrt-a${value}`).removeClass('border-primary');
+        } else {
+            if(current_answer.length <= MAX_ANSWERS) {
+                current_answer.push(value);
+                $(`#btn${value}`).addClass('active');
+                $(`#mrt-a${value}`).addClass('border-primary');
+            }
+        }
+        if(current_answer.length == MAX_ANSWERS) {
+            $('button:not(.active)').addClass('disabled');
+        } else {
+            $('button.disabled').removeClass('disabled');
+        }
+    }
+</script>
