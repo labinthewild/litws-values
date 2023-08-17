@@ -204,3 +204,49 @@
             transform: translate(24px, 0);
         }
     }
+
+    .mrt-stimulus {
+        width: 160px;
+        height: 160px;
+    }
+
+    .mrt-q0 {
+        background: url(../img/mrt_stimuli.png) 0 0;
+    }
+
+    .mrt-stimulus.mrt-q0-a1 {
+        background: url(../img/mrt_stimuli.png) -160px 0;
+    }
+
+    .mrt-stimulus.mrt-q0-a2 {
+        background: url(../img/mrt_stimuli.png) -320px 0;
+    }
+
+    .mrt-stimulus.mrt-q0-a3 {
+        background: url(../img/mrt_stimuli.png) -480px 0;
+    }
+
+    .mrt-stimulus.mrt-q0-a4 {
+        background: url(../img/mrt_stimuli.png) -640px 0;
+    }
+
+    .mrt-stimulus.mrt-q1 {
+        background: url(../img/mrt_stimuli.png) 0 -160px;
+    }
+
+    .mrt-stimulus.mrt-q1-a1 {
+        background: url(../img/mrt_stimuli.png) -160px -160px;
+    }
+
+    .mrt-stimulus.mrt-q1-a2 {
+        background: url(../img/mrt_stimuli.png) -320px -160px;
+    }
+
+    .mrt-stimulus.mrt-q1-a3 {
+        background: url(../img/mrt_stimuli.png) -480px -160px;
+    }
+
+    .mrt-stimulus.mrt-q1-a4 {
+        background: url(../img/mrt_stimuli.png) -640px -160px;
+    }
+

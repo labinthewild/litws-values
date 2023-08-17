@@ -21,7 +21,7 @@
     <h2 id="task-ended" class="bolded-blue hidden" data-i18n="study-task-spacial-header-ended"></h2>
 
     <div id="mrt-form">
-        <img id="mrt-q" src="./img/MRTStimuli/T0-0.png" class="figure-img" alt="...">
+        <img id="mrt-q" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0" alt="...">
         <div id="mrt-answers" class="table-responsive">
             <table class="table-borderless" style="margin: auto">
                 <tbody>
@@ -34,10 +34,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><img id="mrt-a1" src="./img/MRTStimuli/T0-1.png" class="border" alt="..."></td>
-                        <td><img id="mrt-a2" src="./img/MRTStimuli/T0-2.png" class="border" alt="..."></td>
-                        <td><img id="mrt-a3" src="./img/MRTStimuli/T0-3.png" class="border" alt="..."></td>
-                        <td><img id="mrt-a4" src="./img/MRTStimuli/T0-4.png" class="border" alt="..."></td>
+                        <td><img id="mrt-a1" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a1 border" alt="..."></td>
+                        <td><img id="mrt-a2" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a2 border" alt="..."></td>
+                        <td><img id="mrt-a3" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a3 border" alt="..."></td>
+                        <td><img id="mrt-a4" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a4 border" alt="..."></td>
                     </tr>
                     <tr>
                         <td><button id="btn1" type="button" class="btn btn-primary btn-lg" onclick="changeAnswerSelection(1)">1</button></td>
@@ -48,7 +48,7 @@
                 </tbody>
             </table>
         </div>
-        <button id="task-submit-button" type="button" class="btn btn-primary btn-lg col-6 mx-auto hidden" data-i18n="study-task-spacial-submit"
+        <button id="task-submit-button" type="button" class="btn btn-primary btn-lg col-6 mx-auto d-grid disabled" data-i18n="study-task-spacial-submit"
                 style="margin: 20px" onclick="saveResponse()"></button>
     </div>
 </div>
@@ -83,16 +83,16 @@
         }
         if(current_answer.length == MAX_ANSWERS) {
             $('#mrt-answers button:not(.active)').addClass('disabled');
-            $('#task-submit-button').addClass('d-grid');
+            $('#task-submit-button').removeClass('disabled');
         } else {
             $('#mrt-answers button.disabled').removeClass('disabled');
-            $('#task-submit-button').removeClass('d-grid');
+            $('#task-submit-button').addClass('disabled');
         }
     }
 
     function saveResponse() {
         final_answers[`${steps[steps.counter]}_${current_task}`] = {
-            answer: JSON.parse(JSON.stringify(current_answer)),
+            answer: JSON.parse(JSON.stringify(current_answer.sort())),
             time: Date.now()-time_now
         };
         updateInterface();
@@ -105,7 +105,6 @@
             $('#ai-choices').text(JSON.stringify(generateAISuggestion()));
             $('#ai-suggestion').show();
             if(round==0) {
-                //$('#title-intro-p1').hide();
                 $('#title-intro-p2').show('slow');
             }
         }
@@ -127,7 +126,7 @@
 
         $('#task-counter-text').text(`${round}/${LITW.study.params.task_length}`);
         $('#ai-suggestion').hide();
-        $('#task-submit-button').removeClass('d-grid');
+        $('#task-submit-button').addClass('disabled');
 
         if(round==1){
             $('#task-intro').hide();
@@ -135,15 +134,18 @@
         }
 
         if(round <= LITW.study.params.task_length) {
+            let previous_task = current_task;
             //TODO: Get (and remove) a task from `available_tasks`
             current_task = 1;
-            //TODO: Add all these in one big image!!!
-            $('#mrt-q').attr('src',IMG_RESOURCE.replace('{task-id}',current_task).replace('{image-id}','0'));
+            $('#mrt-q')
+                .removeClass(`mrt-q${previous_task}`)
+                .addClass(`mrt-q${current_task}`);
             for(let counter=1; counter<=4; counter++) {
-                $(`#mrt-a${counter}`).attr('src',IMG_RESOURCE.replace('{task-id}',current_task).replace('{image-id}',''+counter));
-                $(`#btn${counter}`).removeClass('active');
-                $(`#btn${counter}`).removeClass('disabled');
-                $(`#mrt-a${counter}`).removeClass('border-primary');
+                $(`#mrt-a${counter}`)
+                    .removeClass('border-primary')
+                    .removeClass(`mrt-q${previous_task}-a${counter}`)
+                    .addClass(`mrt-q${current_task}-a${counter}`);
+                $(`#btn${counter}`).removeClass('active').removeClass('disabled');
             }
         } else {
             $('#task-counter').hide();
