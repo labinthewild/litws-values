@@ -1,19 +1,43 @@
 <!-- Template for instructions page -->
 
 <div class="instructions-stim-container">
-    <h2 class="bolded-blue" data-i18n="study-task-spacial-intro-header"></h2>
-    <p data-i18n="study-task-spacial-intro-p1"></p>
-    <p data-i18n="study-task-spacial-intro-p2"></p>
+    <div id="task-intro">
+        <h2 class="bolded-blue" data-i18n="study-task-spacial-intro-header"></h2>
+        <div id="title-intro-p1">
+            <p data-i18n="study-task-spacial-intro-p1"></p>
+            <p data-i18n="study-task-spacial-intro-p2"></p>
+        </div>
+        <div id="title-intro-p2" class="hidden">
+            <p class="text-primary" data-i18n="study-task-spacial-intro-p3"></p>
+            <p class="text-primary" data-i18n="study-task-spacial-intro-p4"></p>
+        </div>
+    </div>
+
+    <h2 id="task-counter" class="bolded-blue hidden">
+        <span data-i18n="study-task-spacial-header"></span>
+        <span id="task-counter-text"></span>
+    </h2>
+
+    <h2 id="task-ended" class="bolded-blue hidden" data-i18n="study-task-spacial-header-ended"></h2>
+
     <div id="mrt-form">
-        <img id="mrt-q" src="./img/MRTStimuli/Q0-0.png" class="figure-img" alt="...">
+        <img id="mrt-q" src="./img/MRTStimuli/T0-0.png" class="figure-img" alt="...">
         <div id="mrt-answers" class="table-responsive">
             <table class="table-borderless" style="margin: auto">
                 <tbody>
+                    <tr id="ai-suggestion" class="hidden">
+                        <td colspan="4">
+                            <div class="robot-bg message-cloud">
+                                <span data-i18n="study-task-spacial-ai-suggestion1"></span>
+                                <span id="ai-choices"></span>
+                            </div>
+                        </td>
+                    </tr>
                     <tr>
-                        <td><img id="mrt-a1" src="./img/MRTStimuli/Q0-1.png" class="border" alt="..."></td>
-                        <td><img id="mrt-a2" src="./img/MRTStimuli/Q0-2.png" class="border" alt="..."></td>
-                        <td><img id="mrt-a3" src="./img/MRTStimuli/Q0-3.png" class="border" alt="..."></td>
-                        <td><img id="mrt-a4" src="./img/MRTStimuli/Q0-4.png" class="border" alt="..."></td>
+                        <td><img id="mrt-a1" src="./img/MRTStimuli/T0-1.png" class="border" alt="..."></td>
+                        <td><img id="mrt-a2" src="./img/MRTStimuli/T0-2.png" class="border" alt="..."></td>
+                        <td><img id="mrt-a3" src="./img/MRTStimuli/T0-3.png" class="border" alt="..."></td>
+                        <td><img id="mrt-a4" src="./img/MRTStimuli/T0-4.png" class="border" alt="..."></td>
                     </tr>
                     <tr>
                         <td><button id="btn1" type="button" class="btn btn-primary btn-lg" onclick="changeAnswerSelection(1)">1</button></td>
@@ -24,12 +48,25 @@
                 </tbody>
             </table>
         </div>
+        <button id="task-submit-button" type="button" class="btn btn-primary btn-lg col-6 mx-auto hidden" data-i18n="study-task-spacial-submit"
+                style="margin: 20px" onclick="saveResponse()"></button>
     </div>
 </div>
 
 <script type="text/javascript">
+    let available_tasks = [1,2,5,9,10,13,14,15,17,18];
+    let round = 0;
+    let current_task = 0;
+    let time_now = Date.now();
+    let steps = {
+        1: 'ANSWER_IDV',
+        2: 'ANSWER_AI',
+        counter: 1
+    }
+    let final_answers = {};
     let current_answer = [];
     const MAX_ANSWERS = 2;
+    const IMG_RESOURCE = './img/MRTStimuli/T{task-id}-{image-id}.jpeg';
 
     function changeAnswerSelection(value){
         let value_position = current_answer.indexOf(value);
@@ -45,9 +82,74 @@
             }
         }
         if(current_answer.length == MAX_ANSWERS) {
-            $('button:not(.active)').addClass('disabled');
+            $('#mrt-answers button:not(.active)').addClass('disabled');
+            $('#task-submit-button').addClass('d-grid');
         } else {
-            $('button.disabled').removeClass('disabled');
+            $('#mrt-answers button.disabled').removeClass('disabled');
+            $('#task-submit-button').removeClass('d-grid');
+        }
+    }
+
+    function saveResponse() {
+        final_answers[`${steps[steps.counter]}_${current_task}`] = {
+            answer: JSON.parse(JSON.stringify(current_answer)),
+            time: Date.now()-time_now
+        };
+        updateInterface();
+    }
+
+    function updateInterface() {
+        steps.counter += steps.counter;
+
+        if(steps[steps.counter]==='ANSWER_AI') {
+            $('#ai-choices').text(JSON.stringify(generateAISuggestion()));
+            $('#ai-suggestion').show();
+            if(round==0) {
+                //$('#title-intro-p1').hide();
+                $('#title-intro-p2').show('slow');
+            }
+        }
+        if(steps.counter >= Object.keys(steps).length) {
+            resetInterface();
+        }
+        time_now = Date.now();
+    }
+
+    function generateAISuggestion() {
+        //TODO: randomly generate? Always challenge the respondent? interchange between right and wrong answer?
+        return [1,2];
+    }
+
+    function resetInterface() {
+        steps.counter = 1;
+        round += 1;
+        current_answer = [];
+
+        $('#task-counter-text').text(`${round}/${LITW.study.params.task_length}`);
+        $('#ai-suggestion').hide();
+        $('#task-submit-button').removeClass('d-grid');
+
+        if(round==1){
+            $('#task-intro').hide();
+            $('#task-counter').show();
+        }
+
+        if(round <= LITW.study.params.task_length) {
+            //TODO: Get (and remove) a task from `available_tasks`
+            current_task = 1;
+            //TODO: Add all these in one big image!!!
+            $('#mrt-q').attr('src',IMG_RESOURCE.replace('{task-id}',current_task).replace('{image-id}','0'));
+            for(let counter=1; counter<=4; counter++) {
+                $(`#mrt-a${counter}`).attr('src',IMG_RESOURCE.replace('{task-id}',current_task).replace('{image-id}',''+counter));
+                $(`#btn${counter}`).removeClass('active');
+                $(`#btn${counter}`).removeClass('disabled');
+                $(`#mrt-a${counter}`).removeClass('border-primary');
+            }
+        } else {
+            $('#task-counter').hide();
+            $('#mrt-form').hide();
+            $('#task-ended').show();
+            $('#btn-next-page').show();
         }
     }
 </script>

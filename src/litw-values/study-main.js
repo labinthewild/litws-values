@@ -51,6 +51,7 @@ module.exports = (function(exports) {
 		convo_length_min: 2,
 		convo_snippets: [],
 		ai_impressions_before_task: false,
+		task_length: 1,
 		slides: {
 			INTRO: {
 				name: "study_introduction",
