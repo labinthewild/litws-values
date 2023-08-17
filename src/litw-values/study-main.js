@@ -42,7 +42,8 @@ module.exports = (function(exports) {
 	var timeline = [],
 	params = {
 		currentProgress: 0,
-		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif"],
+		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif",
+		"./img/mrt_stim_transparent.png","./img/mrt_stimuli.png"],
 		participant_values: {},
 		values_data: null,
 		convo_data: null,
@@ -52,6 +53,7 @@ module.exports = (function(exports) {
 		convo_snippets: [],
 		ai_impressions_before_task: false,
 		task_length: 1,
+		task_answers: {},
 		slides: {
 			INTRO: {
 				name: "study_introduction",
@@ -118,7 +120,14 @@ module.exports = (function(exports) {
 				type: "display-slide",
 				template: taskTemplate,
 				display_next_button: false,
-				display_element: $("#task")
+				display_element: $("#task"),
+				finish: function(){
+					let task_data= {
+						task_answers: params.task_answers
+					}
+					LITW.data.submitStudyData(task_data);
+				}
+
 			},
 			COMMENTS: {
 				name: "comments",
@@ -153,22 +162,22 @@ module.exports = (function(exports) {
 		});
 
 		// ******* BEGIN STUDY PROGRESSION ******** //
-		//timeline.push(params.slides.INTRO);
-		// timeline.push(params.slides.IRB);
-		// timeline.push(params.slides.DEMOGRAPHICS);
-		// timeline.push(params.slides.VALUES_Q);
-		// timeline.push(params.slides.AI_CONVO);
+		timeline.push(params.slides.INTRO);
+		timeline.push(params.slides.IRB);
+		timeline.push(params.slides.DEMOGRAPHICS);
+		timeline.push(params.slides.VALUES_Q);
+		timeline.push(params.slides.AI_CONVO);
 
 		//TODO: REMOVE - TASK added alone here for testing!
-		timeline.push(params.slides.TASK);
+		// timeline.push(params.slides.TASK);
 
-		// if(params.ai_impressions_before_task) {
-		// 	timeline.push(params.slides.AI_IMPRESSIONS);
-		// 	timeline.push(params.slides.TASK);
-		// } else {
-		// 	timeline.push(params.slides.TASK);
-		// 	timeline.push(params.slides.AI_IMPRESSIONS);
-		// }
+		if(params.ai_impressions_before_task) {
+			timeline.push(params.slides.AI_IMPRESSIONS);
+			timeline.push(params.slides.TASK);
+		} else {
+			timeline.push(params.slides.TASK);
+			timeline.push(params.slides.AI_IMPRESSIONS);
+		}
 		timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
 		// ******* END STUDY PROGRESSION ******** //

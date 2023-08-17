@@ -148,6 +148,7 @@
                 $(`#btn${counter}`).removeClass('active').removeClass('disabled');
             }
         } else {
+            LITW.study.params.task_answers = final_answers;
             $('#task-counter').hide();
             $('#mrt-form').hide();
             $('#task-ended').show();
