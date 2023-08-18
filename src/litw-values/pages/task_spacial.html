@@ -40,10 +40,10 @@
                         <td><img id="mrt-a4" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a4 border" alt="..."></td>
                     </tr>
                     <tr>
-                        <td><button id="btn1" type="button" class="btn btn-primary btn-lg" onclick="changeAnswerSelection(1)">1</button></td>
-                        <td><button id="btn2" type="button" class="btn btn-primary btn-lg" onclick="changeAnswerSelection(2)">2</button></td>
-                        <td><button id="btn3" type="button" class="btn btn-primary btn-lg" onclick="changeAnswerSelection(3)">3</button></td>
-                        <td><button id="btn4" type="button" class="btn btn-primary btn-lg" onclick="changeAnswerSelection(4)">4</button></td>
+                        <td><button id="btn1" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(1)">1</button></td>
+                        <td><button id="btn2" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(2)">2</button></td>
+                        <td><button id="btn3" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(3)">3</button></td>
+                        <td><button id="btn4" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(4)">4</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -68,24 +68,32 @@
     const MAX_ANSWERS = 2;
     const IMG_RESOURCE = './img/MRTStimuli/T{task-id}-{image-id}.jpeg';
 
-    function changeAnswerSelection(value){
+    function addToAnswerSelection(value){
         let value_position = current_answer.indexOf(value);
-        if (value_position !== -1) {
-            current_answer.splice(value_position, 1);
-            $(`#btn${value}`).removeClass('active');
-            $(`#mrt-a${value}`).removeClass('border-primary');
+        if (value_position == -1) {
+            if(current_answer.length == MAX_ANSWERS) {
+                current_answer = [];
+            }
+            current_answer.push(value);
         } else {
-            if(current_answer.length <= MAX_ANSWERS) {
-                current_answer.push(value);
-                $(`#btn${value}`).addClass('active');
-                $(`#mrt-a${value}`).addClass('border-primary');
+            current_answer.splice(value_position, 1);
+        }
+        updateSelection();
+    }
+
+    function updateSelection(){
+        for(let option of [1,2,3,4]) {
+            if(current_answer.indexOf(option) == -1){
+                $(`#btn${option}`).removeClass('active');
+                $(`#mrt-a${option}`).removeClass('border-primary');
+            } else {
+                $(`#btn${option}`).addClass('active');
+                $(`#mrt-a${option}`).addClass('border-primary');
             }
         }
         if(current_answer.length == MAX_ANSWERS) {
-            $('#mrt-answers button:not(.active)').addClass('disabled');
             $('#task-submit-button').removeClass('disabled');
         } else {
-            $('#mrt-answers button.disabled').removeClass('disabled');
             $('#task-submit-button').addClass('disabled');
         }
     }

@@ -164,22 +164,22 @@ module.exports = (function(exports) {
 		});
 
 		// ******* BEGIN STUDY PROGRESSION ******** //
-		timeline.push(params.slides.INTRO);
-		timeline.push(params.slides.IRB);
-		timeline.push(params.slides.DEMOGRAPHICS);
-		timeline.push(params.slides.VALUES_Q);
-		timeline.push(params.slides.AI_CONVO);
+		// timeline.push(params.slides.INTRO);
+		// timeline.push(params.slides.IRB);
+		// timeline.push(params.slides.DEMOGRAPHICS);
+		// timeline.push(params.slides.VALUES_Q);
+		//timeline.push(params.slides.AI_CONVO);
 
 		//TODO: REMOVE - TASK added alone here for testing!
-		// timeline.push(params.slides.TASK);
+		timeline.push(params.slides.TASK);
 
-		if(params.ai_impressions_before_task) {
-			timeline.push(params.slides.AI_IMPRESSIONS);
-			timeline.push(params.slides.TASK);
-		} else {
-			timeline.push(params.slides.TASK);
-			timeline.push(params.slides.AI_IMPRESSIONS);
-		}
+		// if(params.ai_impressions_before_task) {
+		// 	timeline.push(params.slides.AI_IMPRESSIONS);
+		// 	timeline.push(params.slides.TASK);
+		// } else {
+		// 	timeline.push(params.slides.TASK);
+		// 	timeline.push(params.slides.AI_IMPRESSIONS);
+		// }
 		timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
 		// ******* END STUDY PROGRESSION ******** //
