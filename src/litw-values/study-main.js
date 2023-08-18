@@ -74,6 +74,7 @@ module.exports = (function(exports) {
 				type: "display-slide",
 				template: demographicsTemplate,
 				display_element: $("#demographics"),
+				display_next_button: false,
 				finish: function(){
 					let dem_data = $('#demographicsForm').alpaca().getValue();
 					LITW.data.submitDemographics(dem_data);
@@ -84,6 +85,7 @@ module.exports = (function(exports) {
 				type: "display-slide",
 				template: valuesTemplate,
 				display_element: $("#values"),
+				display_next_button: false,
 				finish: function(){
 					let values_data = {
 						values: params.values_data

@@ -5,7 +5,7 @@
         <br>
     </div>
 </div>
-<form id="valuesForm" style="text-align: left">
+<form id="valuesForm" style="text-align: left; display: none">
     <div class="mb-3 litw-form-mb3" id="q1">
         <label class="form-label" data-i18n="study-values-vquest-q1"></label>
         <div class="d-flex litw-flex-orientation">
@@ -340,4 +340,17 @@ function vlq_optionClicked(question_number) {
         LITW.study.params.values_data = form_answers;
     }
 }
+
+function shuffleQuestions() {
+    let questions = $('.litw-form-mb3');
+    LITW.utils.shuffleArrays(questions);
+    $('#valuesForm').html("");
+    for(let question of questions) {
+        $('#valuesForm').html($('#valuesForm').html() + question.outerHTML);
+    }
+}
+$(document).ready(function() {
+    shuffleQuestions();
+    $('#valuesForm').show();
+});
 </script>
