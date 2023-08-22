@@ -141,7 +141,6 @@
     //Generate wrong answer every even step
     function generateAISuggestion() {
         let ai_answer = tasks[current_task];
-        console.log(`ROUND: ${round}: answer = ${ai_answer}`);
         if(round>0 && round%2==0) {
             let possible_answers = [1,2,3,4];
             let need_to_mess_up = true;
