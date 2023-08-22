@@ -211,42 +211,222 @@
     }
 
     .mrt-q0 {
-        background: url(../img/mrt_stimuli.png) 0 0;
+        background: url(../img/mrt_stimuli.jpg) 0 0;
     }
 
     .mrt-stimulus.mrt-q0-a1 {
-        background: url(../img/mrt_stimuli.png) -160px 0;
+        background: url(../img/mrt_stimuli.jpg) -160px 0;
     }
 
     .mrt-stimulus.mrt-q0-a2 {
-        background: url(../img/mrt_stimuli.png) -320px 0;
+        background: url(../img/mrt_stimuli.jpg) -320px 0;
     }
 
     .mrt-stimulus.mrt-q0-a3 {
-        background: url(../img/mrt_stimuli.png) -480px 0;
+        background: url(../img/mrt_stimuli.jpg) -480px 0;
     }
 
     .mrt-stimulus.mrt-q0-a4 {
-        background: url(../img/mrt_stimuli.png) -640px 0;
+        background: url(../img/mrt_stimuli.jpg) -640px 0;
     }
 
     .mrt-stimulus.mrt-q1 {
-        background: url(../img/mrt_stimuli.png) 0 -160px;
+        background: url(../img/mrt_stimuli.jpg) 0 -160px;
     }
 
     .mrt-stimulus.mrt-q1-a1 {
-        background: url(../img/mrt_stimuli.png) -160px -160px;
+        background: url(../img/mrt_stimuli.jpg) -160px -160px;
     }
 
     .mrt-stimulus.mrt-q1-a2 {
-        background: url(../img/mrt_stimuli.png) -320px -160px;
+        background: url(../img/mrt_stimuli.jpg) -320px -160px;
     }
 
     .mrt-stimulus.mrt-q1-a3 {
-        background: url(../img/mrt_stimuli.png) -480px -160px;
+        background: url(../img/mrt_stimuli.jpg) -480px -160px;
     }
 
     .mrt-stimulus.mrt-q1-a4 {
-        background: url(../img/mrt_stimuli.png) -640px -160px;
+        background: url(../img/mrt_stimuli.jpg) -640px -160px;
+    }
+
+    .mrt-stimulus.mrt-q2 {
+        background: url(../img/mrt_stimuli.jpg) 0 -320px;
+    }
+
+    .mrt-stimulus.mrt-q2-a1 {
+        background: url(../img/mrt_stimuli.jpg) -160px -320px;
+    }
+
+    .mrt-stimulus.mrt-q2-a2 {
+        background: url(../img/mrt_stimuli.jpg) -320px -320px;
+    }
+
+    .mrt-stimulus.mrt-q2-a3 {
+        background: url(../img/mrt_stimuli.jpg) -480px -320px;
+    }
+
+    .mrt-stimulus.mrt-q2-a4 {
+        background: url(../img/mrt_stimuli.jpg) -640px -320px;
+    }
+
+    .mrt-stimulus.mrt-q5 {
+        background: url(../img/mrt_stimuli.jpg) 0 -480px;
+    }
+
+    .mrt-stimulus.mrt-q5-a1 {
+        background: url(../img/mrt_stimuli.jpg) -160px -480px;
+    }
+
+    .mrt-stimulus.mrt-q5-a2 {
+        background: url(../img/mrt_stimuli.jpg) -320px -480px;
+    }
+
+    .mrt-stimulus.mrt-q5-a3 {
+        background: url(../img/mrt_stimuli.jpg) -480px -480px;
+    }
+
+    .mrt-stimulus.mrt-q5-a4 {
+        background: url(../img/mrt_stimuli.jpg) -640px -480px;
+    }
+
+    .mrt-stimulus.mrt-q9 {
+        background: url(../img/mrt_stimuli.jpg) 0 -640px;
+    }
+
+    .mrt-stimulus.mrt-q9-a1 {
+        background: url(../img/mrt_stimuli.jpg) -160px -640px;
+    }
+
+    .mrt-stimulus.mrt-q9-a2 {
+        background: url(../img/mrt_stimuli.jpg) -320px -640px;
+    }
+
+    .mrt-stimulus.mrt-q9-a3 {
+        background: url(../img/mrt_stimuli.jpg) -480px -640px;
+    }
+
+    .mrt-stimulus.mrt-q9-a4 {
+        background: url(../img/mrt_stimuli.jpg) -640px -640px;
+    }
+
+    .mrt-stimulus.mrt-q10 {
+        background: url(../img/mrt_stimuli.jpg) 0 -800px;
+    }
+
+    .mrt-stimulus.mrt-q10-a1 {
+        background: url(../img/mrt_stimuli.jpg) -160px -800px;
+    }
+
+    .mrt-stimulus.mrt-q10-a2 {
+        background: url(../img/mrt_stimuli.jpg) -320px -800px;
+    }
+
+    .mrt-stimulus.mrt-q10-a3 {
+        background: url(../img/mrt_stimuli.jpg) -480px -800px;
+    }
+
+    .mrt-stimulus.mrt-q10-a4 {
+        background: url(../img/mrt_stimuli.jpg) -640px -800px;
+    }
+
+    .mrt-stimulus.mrt-q13 {
+        background: url(../img/mrt_stimuli.jpg) 0 -960px;
+    }
+
+    .mrt-stimulus.mrt-q13-a1 {
+        background: url(../img/mrt_stimuli.jpg) -160px -960px;
+    }
+
+    .mrt-stimulus.mrt-q13-a2 {
+        background: url(../img/mrt_stimuli.jpg) -320px -960px;
+    }
+
+    .mrt-stimulus.mrt-q13-a3 {
+        background: url(../img/mrt_stimuli.jpg) -480px -960px;
+    }
+
+    .mrt-stimulus.mrt-q13-a4 {
+        background: url(../img/mrt_stimuli.jpg) -640px -960px;
+    }
+
+    .mrt-stimulus.mrt-q14 {
+        background: url(../img/mrt_stimuli.jpg) 0 -1120px;
+    }
+
+    .mrt-stimulus.mrt-q14-a1 {
+        background: url(../img/mrt_stimuli.jpg) -160px -1120px;
+    }
+
+    .mrt-stimulus.mrt-q14-a2 {
+        background: url(../img/mrt_stimuli.jpg) -320px -1120px;
+    }
+
+    .mrt-stimulus.mrt-q14-a3 {
+        background: url(../img/mrt_stimuli.jpg) -480px -1120px;
+    }
+
+    .mrt-stimulus.mrt-q14-a4 {
+        background: url(../img/mrt_stimuli.jpg) -640px -1120px;
+    }
+
+    .mrt-stimulus.mrt-q15 {
+        background: url(../img/mrt_stimuli.jpg) 0 -1280px;
+    }
+
+    .mrt-stimulus.mrt-q15-a1 {
+        background: url(../img/mrt_stimuli.jpg) -160px -1280px;
+    }
+
+    .mrt-stimulus.mrt-q15-a2 {
+        background: url(../img/mrt_stimuli.jpg) -320px -1280px;
+    }
+
+    .mrt-stimulus.mrt-q15-a3 {
+        background: url(../img/mrt_stimuli.jpg) -480px -1280px;
+    }
+
+    .mrt-stimulus.mrt-q15-a4 {
+        background: url(../img/mrt_stimuli.jpg) -640px -1280px;
+    }
+
+    .mrt-stimulus.mrt-q17 {
+        background: url(../img/mrt_stimuli.jpg) 0 -1440px;
+    }
+
+    .mrt-stimulus.mrt-q17-a1 {
+        background: url(../img/mrt_stimuli.jpg) -160px -1440px;
+    }
+
+    .mrt-stimulus.mrt-q17-a2 {
+        background: url(../img/mrt_stimuli.jpg) -320px -1440px;
+    }
+
+    .mrt-stimulus.mrt-q17-a3 {
+        background: url(../img/mrt_stimuli.jpg) -480px -1440px;
+    }
+
+    .mrt-stimulus.mrt-q17-a4 {
+        background: url(../img/mrt_stimuli.jpg) -640px -1440px;
+    }
+
+    .mrt-stimulus.mrt-q18 {
+        background: url(../img/mrt_stimuli.jpg) 0 -1600px;
+    }
+
+    .mrt-stimulus.mrt-q18-a1 {
+        background: url(../img/mrt_stimuli.jpg) -160px -1600px;
+    }
+
+    .mrt-stimulus.mrt-q18-a2 {
+        background: url(../img/mrt_stimuli.jpg) -320px -1600px;
+    }
+
+    .mrt-stimulus.mrt-q18-a3 {
+        background: url(../img/mrt_stimuli.jpg) -480px -1600px;
+    }
+
+    .mrt-stimulus.mrt-q18-a4 {
+        background: url(../img/mrt_stimuli.jpg) -640px -1600px;
     }
 

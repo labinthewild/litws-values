@@ -49,23 +49,33 @@
             </table>
         </div>
         <button id="task-submit-button" type="button" class="btn btn-primary btn-lg col-6 mx-auto d-grid disabled" data-i18n="study-task-spacial-submit"
-                style="margin: 20px" onclick="saveResponse()"></button>
+                style="margin: 20px" onclick="saveParticipantResponse()"></button>
     </div>
 </div>
 
 <script type="text/javascript">
     let available_tasks = [1,2,5,9,10,13,14,15,17,18];
+    let tasks = {
+        0: [1,2],
+        1: [1,3],
+        2: [1,4],
+        5: [1,3],
+        9: [2,4],
+        10: [1,4],
+        13: [2,4],
+        14: [1,4],
+        15: [2,4],
+        17: [1,3],
+        18: [1,4]
+    }
     let round = 0;
     let current_task = 0;
     let time_now = Date.now();
-    let steps = {
-        1: 'ANSWER_IDV',
-        2: 'ANSWER_AI',
-        counter: 1
-    }
+    let steps_counter = 1;
     let final_answers = {};
     let current_answer = [];
     const MAX_ANSWERS = 2;
+    const FINAL_STEP = 2;
     const IMG_RESOURCE = './img/MRTStimuli/T{task-id}-{image-id}.jpeg';
 
     function addToAnswerSelection(value){
@@ -98,37 +108,56 @@
         }
     }
 
-    function saveResponse() {
-        final_answers[`${steps[steps.counter]}_${current_task}`] = {
-            answer: JSON.parse(JSON.stringify(current_answer.sort())),
-            time: Date.now()-time_now
-        };
+    function saveParticipantResponse() {
+        saveResponse(`T${current_task}_A${steps_counter}`, current_answer);
         updateInterface();
     }
 
-    function updateInterface() {
-        steps.counter += steps.counter;
+    function saveResponse(response_name, response_array) {
+        final_answers[response_name] = {
+            answer: JSON.parse(JSON.stringify(response_array.sort())),
+            time: Date.now()-time_now
+        };
+    }
 
-        if(steps[steps.counter]==='ANSWER_AI') {
-            $('#ai-choices').text(JSON.stringify(generateAISuggestion()));
+    function updateInterface() {
+        steps_counter += steps_counter;
+
+        if(steps_counter==2) {
+            let ai_suggestion = generateAISuggestion().sort();
+            saveResponse(`T${current_task}_AI`, ai_suggestion);
+            $('#ai-choices').text(JSON.stringify(ai_suggestion));
             $('#ai-suggestion').show();
             if(round==0) {
                 $('#title-intro-p2').show('slow');
             }
         }
-        if(steps.counter >= Object.keys(steps).length) {
+        if(steps_counter > FINAL_STEP) {
             resetInterface();
         }
         time_now = Date.now();
     }
 
+    //Generate wrong answer every even step
     function generateAISuggestion() {
-        //TODO: randomly generate? Always challenge the respondent? interchange between right and wrong answer?
-        return [1,2];
+        let ai_answer = tasks[current_task];
+        console.log(`ROUND: ${round}: answer = ${ai_answer}`);
+        if(round>0 && round%2==0) {
+            let possible_answers = [1,2,3,4];
+            let need_to_mess_up = true;
+            while(possible_answers.length>0 && need_to_mess_up){
+                let messed_up_answer = possible_answers.splice(Math.floor(Math.random()*possible_answers.length), 1)[0];
+                if(ai_answer.indexOf(messed_up_answer)==-1) {
+                    ai_answer[Math.floor(Math.random()*ai_answer.length)] = messed_up_answer;
+                    need_to_mess_up = false;
+                }
+            }
+        }
+        return ai_answer;
     }
 
     function resetInterface() {
-        steps.counter = 1;
+        steps_counter = 1;
         round += 1;
         current_answer = [];
 
@@ -143,8 +172,7 @@
 
         if(round <= LITW.study.params.task_length) {
             let previous_task = current_task;
-            //TODO: Get (and remove) a task from `available_tasks`
-            current_task = 1;
+            current_task = available_tasks.splice(Math.floor(Math.random()*available_tasks.length), 1);
             $('#mrt-q')
                 .removeClass(`mrt-q${previous_task}`)
                 .addClass(`mrt-q${current_task}`);
