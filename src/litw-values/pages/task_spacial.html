@@ -108,14 +108,19 @@
         }
     }
 
+    function isResponseCorrect(response_array, question_number){
+        return JSON.stringify(response_array.sort())===JSON.stringify(tasks[question_number]);
+    }
+
     function saveParticipantResponse() {
-        saveResponse(`T${current_task}_A${steps_counter}`, current_answer);
+        saveResponse(`T${current_task}_A${steps_counter}`, current_answer, isResponseCorrect(current_answer, current_task));
         updateInterface();
     }
 
-    function saveResponse(response_name, response_array) {
+    function saveResponse(response_name, response_array, response_correct) {
         final_answers[response_name] = {
-            answer: JSON.parse(JSON.stringify(response_array.sort())),
+            answer: JSON.parse(JSON.stringify(response_array)),
+            correct: response_correct,
             time: Date.now()-time_now
         };
     }
@@ -125,7 +130,7 @@
 
         if(steps_counter==2) {
             let ai_suggestion = generateAISuggestion().sort();
-            saveResponse(`T${current_task}_AI`, ai_suggestion);
+            saveResponse(`T${current_task}_AI`, ai_suggestion, isResponseCorrect(ai_suggestion, current_task));
             $('#ai-choices').text(JSON.stringify(ai_suggestion));
             $('#ai-suggestion').show();
             if(round==0) {
@@ -140,7 +145,7 @@
 
     //Generate wrong answer every even step
     function generateAISuggestion() {
-        let ai_answer = tasks[current_task];
+        let ai_answer = JSON.parse(JSON.stringify(tasks[current_task]));
         if(round>0 && round%2==0) {
             let possible_answers = [1,2,3,4];
             let need_to_mess_up = true;

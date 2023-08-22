@@ -1,0 +1,56 @@
+
+<h3 class="bolded-blue" style="text-align: center" data-i18n="litw-result-header"></h3>
+<br>
+{{#if code}}
+<h5 style="text-align: center">
+    <span data-i18n="litw-result-code"></span>
+    <span>{{ code }}</span>
+</h5>
+<br>
+{{/if}}
+<h4 style="text-align: center" data-i18n="study-values-result-title"></h4>
+<br>
+
+<div id="values-map" class="litw-results-chart">
+    <figure class="figure">
+        <img src="img/mockmap.png" class="img-fluid" alt="">
+        <figcaption class="figure-caption">
+            <span data-i18n="study-values-result-map-caption1"></span>
+            <a href="https://www.worldvaluessurvey.org/WVSNewsShow.jsp?ID=467" target="_blank" data-i18n="study-values-result-map-caption-source"></a>
+            <span data-i18n="study-values-result-map-caption2"></span>
+        </figcaption>
+    </figure>
+</div>
+
+<div class="container">
+  <div class="row row-cols-2">
+    <div class="col">
+        <span style="font-weight: bold" data-i18n="study-values-result-tv"></span>
+        <span data-i18n="study-values-result-tv-expl"></span>
+    </div>
+    <div class="col">
+        <span style="font-weight: bold" data-i18n="study-values-result-sv"></span>
+        <span data-i18n="study-values-result-sv-expl"></span>
+    </div>
+  </div>
+  <div class="row row-cols-2 mt-3">
+    <div class="col">
+        <span style="font-weight: bold" data-i18n="study-values-result-srv"></span>
+        <span data-i18n="study-values-result-srv-expl"></span>
+    </div>
+    <div class="col">
+        <span style="font-weight: bold" data-i18n="study-values-result-sev"></span>
+        <span data-i18n="study-values-result-sev-expl"></span>
+    </div>
+  </div>
+</div>
+
+<input type="hidden" id="file-src" value="include/inglehart-welzel.csv">
+<br>
+<div id="results-footer"></div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        //build_values_map('values-map', userXY);
+    });
+</script>
