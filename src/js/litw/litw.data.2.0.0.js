@@ -16,22 +16,19 @@
 (function( exports ) {
     "use strict";
 
+    const SERVER_URL = '';
+    const LITW_API_URL = 'https://api.labinthewild.org';
     var version = '2.0.0',
         params = {
             _isInitialized: false,
             participantId: 0,
             ipCountry: "not_fetched_or_initialized",
+            ipRegion: "not_fetched_or_initialized",
             ipCity: "not_fetched_or_initialized",
             userAgent: "not_fetched_or_initialized"
         },
         getParticipantId = function() {
             return params.participantId;
-        },
-        getCountry = function() {
-            return params.ipCountry;
-        },
-        getCity = function() {
-            return params.ipCity;
         },
         isInitialized = function() {
             return params._isInitialized;
@@ -41,7 +38,7 @@
         },
         initialize = function() {
             let litw_locale = LITW.locale.getLocale() || "";
-            let geoip_url = '/service/geoip/';
+            let geoip_url = `${LITW_API_URL}/service/geoip/`;
 
             if (!params._isInitialized) {
                 params._isInitialized = true;
@@ -50,12 +47,16 @@
                 params.url = getRequestParams();
                 return $.getJSON(geoip_url, function(data) {
                     params.ipCity = data.city;
+                    params.ipRegion = data.region;
                     params.ipCountry = data.country;
                 }).always(function() {
                     let data = {
                         contentLanguage: litw_locale,
-                        city: params.ipCity,
-                        country: params.ipCountry,
+                        geoLoc: {
+                            city: params.ipCity,
+                            region: params.ipRegion,
+                            country: params.ipCountry,
+			},
                         userAgent: params.userAgent,
                         urlParams: params.url
                     };
@@ -75,7 +76,7 @@
         },
         _submit = function(obj_data, finalAttempt) {
             $.ajax({
-                url: '/service/data/',
+                url: `${SERVER_URL}/service/data/`,
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(obj_data),
@@ -119,8 +120,6 @@
     exports.data.submitData = submitData;
     exports.data.initialize = initialize;
     exports.data.getParticipantId = getParticipantId;
-    exports.data.getCountry = getCountry;
-    exports.data.getCity = getCity;
     exports.data.getURLparams = getURLparams;
     exports.data.isInitialized = isInitialized;
 
