@@ -48,8 +48,8 @@ module.exports = (function(exports) {
 		values_data: null,
 		convo_data: null,
 		impressions_data: null,
-		convo_length_max: 10,
-		convo_length_min: 2,
+		convo_length_max: 8,
+		convo_length_min: 4,
 		convo_snippets: [],
 		ai_impressions_before_task: false,
 		task_length: 5,
@@ -167,7 +167,7 @@ module.exports = (function(exports) {
 		// timeline.push(params.slides.INTRO);
 		// timeline.push(params.slides.IRB);
 		// timeline.push(params.slides.DEMOGRAPHICS);
-		timeline.push(params.slides.VALUES_Q);
+		// timeline.push(params.slides.VALUES_Q);
 		timeline.push(params.slides.AI_CONVO);
 
 		// //TODO: REMOVE - TASK added alone here for testing!
@@ -186,21 +186,16 @@ module.exports = (function(exports) {
 	}
 
 	function generateAIConversation() {
+		_.shuffle(params.convo_data.convo_data);
 		for (let counter = 0; counter < params.convo_length_max; counter++ ){
-			let num1 = Math.floor(Math.random() * params.convo_data.length);
-			let num2 = num1;
-			while(num1 == num2){
-				num2 = Math.floor(Math.random() * params.convo_data.length);
-			}
-			let convo1 = params.convo_data[num1];
-			let convo2 = params.convo_data[num2];
+			let convo = params.convo_data.splice(0,2);
 			params.convo_snippets.push({
-				q1_id: convo1.QID,
-				q1:convo1.snippetq,
-				a1:convo1.snippeta,
-				q2_id: convo2.QID,
-				q2:convo2.snippetq,
-				a2:convo2.snippeta
+				q1_id: convo[0].QID,
+				q1:convo[0].snippetq,
+				a1:convo[0].snippeta,
+				q2_id: convo[1].QID,
+				q2:convo[1].snippetq,
+				a2:convo[1].snippeta
 			});
 		}
 	}

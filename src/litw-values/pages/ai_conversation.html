@@ -48,6 +48,7 @@
     const MIN_CONVO_SIZE = LITW.study.params.convo_length_min;
     let convos = LITW.study.params.convo_snippets;
     let current_convo = 1;
+    let followup_msg = _.shuffle(_.range(5));
     let user_interrupted_convo = false;
     let convo_data = {};
 
@@ -65,7 +66,7 @@
         });
     };
 
-    let add_convo = function (q_id, q_string, a_id, a_string) {
+    let add_convo = function (q_id, q_string, a_id, a_string, follow_up_id, follow_up_string=null) {
         $('#convo_thread').append(`<div id="${q_id}" class="pt-4"></div>`);
         $(`#${q_id}`).append(`<div id="${q_id}_snippet" class="col-8 human-bg message-cloud p-2 offset-4 hidden"></div>`);
         $(`#${q_id}_snippet`).append(`<div id="${q_id}_message" class="hidden">${q_string}</div>`);
@@ -76,6 +77,13 @@
         $(`#${a_id}_snippet`).append(`<div id="${a_id}_message" class="hidden">${a_string}</div>`);
         $(`#${a_id}_snippet`).append(`<div id="${a_id}_sent" class="small_ai">${$.i18n('study-convo-by_ai')}</div>`);
         $(`#${a_id}_snippet`).append(`<div id="${a_id}_loading" class="lds-ellipsis lds-robot"><div></div><div></div><div></div><div></div></div>`);
+        if(follow_up_string) {
+            $('#convo_thread').append(`<div id="${follow_up_id}" class="pt-4 pb-4"></div>`);
+            $(`#${follow_up_id}`).append(`<div id="${follow_up_id}_snippet" class="col-8 robot-bg message-cloud p-2 hidden"></div>`);
+            $(`#${follow_up_id}_snippet`).append(`<div id="${follow_up_id}_message" class="hidden">${follow_up_string}</div>`);
+            $(`#${follow_up_id}_snippet`).append(`<div id="${follow_up_id}_sent" class="small_ai">${$.i18n('study-convo-by_ai')}</div>`);
+            $(`#${follow_up_id}_snippet`).append(`<div id="${follow_up_id}_loading" class="lds-ellipsis lds-robot"><div></div><div></div><div></div><div></div></div>`);
+        }
     }
 
     let req_question = function () {
@@ -100,18 +108,30 @@
         let convo_q = convos[current_convo-1][`q${choice_num}`];
         let convo_a_id = `a${current_convo}`;
         let convo_a = convos[current_convo-1][`a${choice_num}`];
-        if (choice_num==FINAL_CONVO_VAL) {
+        //ADD follow-up message every other question
+        let ai_followup_id = '';
+        let ai_followup = null;
+        if (choice_num===FINAL_CONVO_VAL) {
             convo_q = $.i18n('study-convo-end');
             convo_a = $.i18n('study-convo-end_a');
             user_interrupted_convo = true;
+        } else {
+            if(current_convo%2!==0) {
+                ai_followup_id = `${convo_a_id}_f`;
+                ai_followup = $.i18n(`study-convo-next-${followup_msg.pop()+1}`);
+            }
         }
-        add_convo(convo_q_id, convo_q, convo_a_id, convo_a);
+        add_convo(convo_q_id, convo_q, convo_a_id, convo_a, ai_followup_id, ai_followup);
+
         //TODO: this is creating a not so pleasant UX where the screen moves up with no need!
         $('#questions').hide();
         show_message(convo_q_id, MSG_TIMEOUT-500, function (){
         }).then( function () {
             setTimeout(function () {
                 show_message(convo_a_id, MSG_TIMEOUT+500, function (){
+                    if(ai_followup) {
+                        show_message(ai_followup_id)
+                    }
                     next_step();
                 })
             }, MSG_TIMEOUT);
