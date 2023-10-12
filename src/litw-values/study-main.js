@@ -164,9 +164,9 @@ module.exports = (function(exports) {
 		});
 
 		// ******* BEGIN STUDY PROGRESSION ******** //
-		timeline.push(params.slides.INTRO);
-		timeline.push(params.slides.IRB);
-		timeline.push(params.slides.DEMOGRAPHICS);
+		// timeline.push(params.slides.INTRO);
+		// timeline.push(params.slides.IRB);
+		// timeline.push(params.slides.DEMOGRAPHICS);
 		timeline.push(params.slides.VALUES_Q);
 		timeline.push(params.slides.AI_CONVO);
 
