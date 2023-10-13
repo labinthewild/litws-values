@@ -76,14 +76,26 @@
     let steps_counter = 1;
     let final_answers = {};
     let current_answer = [];
+    let inject_errors_at = [];
+    const TASK_SIZE = 5;
+    const AI_ERRORS = 2;
     const MAX_ANSWERS = 2;
     const FINAL_STEP = 2;
     const IMG_RESOURCE = './img/MRTStimuli/T{task-id}-{image-id}.jpeg';
 
+    function init() {
+        while(inject_errors_at.length<AI_ERRORS){
+            let random_round = Math.floor((Math.random()*TASK_SIZE)+1);
+            if(!inject_errors_at.includes(random_round)) {
+                inject_errors_at.push(random_round)
+            }
+        }
+    }
+
     function addToAnswerSelection(value){
         let value_position = current_answer.indexOf(value);
-        if (value_position == -1) {
-            if(current_answer.length == MAX_ANSWERS) {
+        if (value_position === -1) {
+            if(current_answer.length === MAX_ANSWERS) {
                 current_answer = [];
             }
             current_answer.push(value);
@@ -95,7 +107,7 @@
 
     function updateSelection(){
         for(let option of [1,2,3,4]) {
-            if(current_answer.indexOf(option) == -1){
+            if(current_answer.indexOf(option) === -1){
                 $(`#btn${option}`).removeClass('active');
                 $(`#mrt-a${option}`).removeClass('border-primary');
             } else {
@@ -103,7 +115,7 @@
                 $(`#mrt-a${option}`).addClass('border-primary');
             }
         }
-        if(current_answer.length == MAX_ANSWERS) {
+        if(current_answer.length === MAX_ANSWERS) {
             $('#task-submit-button').removeClass('disabled');
         } else {
             $('#task-submit-button').addClass('disabled');
@@ -130,13 +142,13 @@
     function updateInterface() {
         steps_counter += steps_counter;
 
-        if(steps_counter==2) {
+        if(steps_counter===2) {
             $('#task-submit-button').text($.i18n('study-task-spacial-submit'));
             let ai_suggestion = generateAISuggestion().sort();
             saveResponse(`T${current_task}_AI`, ai_suggestion, isResponseCorrect(ai_suggestion, current_task));
             $('#ai-choices').text(JSON.stringify(ai_suggestion));
             $('#ai-suggestion').show();
-            if(round==0) {
+            if(round===0) {
                 $('#task-intro-p2').show();
             }
         }
@@ -149,12 +161,12 @@
     //Generate wrong answer every even step
     function generateAISuggestion() {
         let ai_answer = JSON.parse(JSON.stringify(tasks[current_task]));
-        if(round>0 && round%2==0) {
+        if(round>0 && inject_errors_at.includes(round)) {
             let possible_answers = [1,2,3,4];
             let need_to_mess_up = true;
             while(possible_answers.length>0 && need_to_mess_up){
                 let messed_up_answer = possible_answers.splice(Math.floor(Math.random()*possible_answers.length), 1)[0];
-                if(ai_answer.indexOf(messed_up_answer)==-1) {
+                if(!ai_answer.includes(messed_up_answer)) {
                     ai_answer[Math.floor(Math.random()*ai_answer.length)] = messed_up_answer;
                     need_to_mess_up = false;
                 }
@@ -168,19 +180,19 @@
         round += 1;
         current_answer = [];
 
-        $('#task-counter-text').text(`${round}/${LITW.study.params.task_length}`);
+        $('#task-counter-text').text(`${round}/${TASK_SIZE}`);
         $('#ai-suggestion').hide();
         $('#task-submit-button')
             .addClass('disabled')
             .text($.i18n('study-task-spacial-suggestion'));
 
-        if(round==1){
+        if(round === 1){
             $('#task-intro').hide();
             $('#task-intro-p2').hide();
             $('#task-counter').show();
         }
 
-        if(round <= LITW.study.params.task_length) {
+        if(round <= TASK_SIZE) {
             let previous_task = current_task;
             current_task = available_tasks.splice(Math.floor(Math.random()*available_tasks.length), 1);
             $('#mrt-q')
@@ -201,4 +213,8 @@
             $('#btn-next-page').show();
         }
     }
+
+    $(document).ready(function() {
+        init()
+    });
 </script>
