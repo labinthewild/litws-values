@@ -163,23 +163,23 @@ module.exports = (function(exports) {
 		});
 
 		// ******* BEGIN STUDY PROGRESSION ******** //
-		timeline.push(params.slides.INTRO);
-		timeline.push(params.slides.IRB);
-		timeline.push(params.slides.DEMOGRAPHICS);
-		timeline.push(params.slides.VALUES_Q);
-		timeline.push(params.slides.AI_CONVO);
+		// timeline.push(params.slides.INTRO);
+		// timeline.push(params.slides.IRB);
+		// timeline.push(params.slides.DEMOGRAPHICS);
+		// timeline.push(params.slides.VALUES_Q);
+		// timeline.push(params.slides.AI_CONVO);
 
 		// TASK added alone here for testing!
 		// timeline.push(params.slides.TASK);
 		// timeline.push(params.slides.AI_IMPRESSIONS);
 
-		if(params.ai_impressions_before_task) {
-			timeline.push(params.slides.AI_IMPRESSIONS);
-			timeline.push(params.slides.TASK);
-		} else {
-			timeline.push(params.slides.TASK);
-			timeline.push(params.slides.AI_IMPRESSIONS);
-		}
+		// if(params.ai_impressions_before_task) {
+		// 	timeline.push(params.slides.AI_IMPRESSIONS);
+		// 	timeline.push(params.slides.TASK);
+		// } else {
+		// 	timeline.push(params.slides.TASK);
+		// 	timeline.push(params.slides.AI_IMPRESSIONS);
+		// }
 		timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
 		// ******* END STUDY PROGRESSION ******** //
@@ -213,16 +213,16 @@ module.exports = (function(exports) {
 		if(Object.keys(params.task_answers).length==0){
 			//TEST DATA
 			params.task_answers = JSON.parse('{' +
-				'"T0_A1":{"answer":[1,2],"correct":true,"time":4204},"T0_AI":{"answer":[1,2],"correct":true,"time":4204},"T0_A2":{"answer":[1,2],"correct":true,"time":4679},' +
-				'"T2_A1":{"answer":[1,2],"correct":false,"time":13019},"T2_AI":{"answer":[1,4],"correct":true,"time":13019},"T2_A2":{"answer":[1,4],"correct":true,"time":38018},' +
-				'"T10_A1":{"answer":[1,2],"correct":false,"time":17242},"T10_AI":{"answer":[2,4],"correct":false,"time":17242},"T10_A2":{"answer":[1,4],"correct":true,"time":9198},' +
-				'"T14_A1":{"answer":[1,2],"correct":false,"time":14307},"T14_AI":{"answer":[1,4],"correct":true,"time":14308},"T14_A2":{"answer":[1,4],"correct":true,"time":9472},' +
-				'"T1_A1":{"answer":[1,2],"correct":false,"time":25247},"T1_AI":{"answer":[1,2],"correct":false,"time":25247},"T1_A2":{"answer":[1,2],"correct":false,"time":13361},' +
-				'"T15_A1":{"answer":[1,2],"correct":false,"time":21005},"T15_AI":{"answer":[2,4],"correct":true,"time":21005},"T15_A2":{"answer":[2,4],"correct":true,"time":14367}' +
+				'"R0_H1":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":6954},"R0_AI":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":6954},"R0_H2":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":2326},' +
+				'"R1_H1":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":14412},"R1_AI":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":14412},"R1_H2":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":2448},' +
+				'"R2_H1":{"answer":[1,4],"task":2,"round":2,"correct":true,"time":18794},"R2_AI":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":18794},"R2_H2":{"answer":[1,4],"task":2,"round":2,"correct":true,"time":7343},' +
+				'"R3_H1":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":27131},"R3_AI":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":27131},"R3_H2":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":2007},' +
+				'"R4_H1":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":16205},"R4_AI":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":16205},"R4_H2":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":1798},' +
+				'"R5_H1":{"answer":[2,4],"task":13,"round":5,"correct":true,"time":13149},"R5_AI":{"answer":[2,3],"task":13,"round":5,"correct":false,"time":13149},"R5_H2":{"answer":[2,4],"task":13,"round":5,"correct":true,"time":4056}' +
 			'}');
 		}
 
-		let user_responses = Object.keys(params.task_answers).filter(function(elem){return elem.includes('A1')});
+		let user_responses = Object.keys(params.task_answers).filter(function(elem){return elem.includes('H1')});
 		let results_data = {
 			correct_a1: 0,
 			correct_ai: 0,
@@ -232,8 +232,8 @@ module.exports = (function(exports) {
 		}
 		for(let r of user_responses) {
 			let a1 = params.task_answers[r];
-			let a2 = params.task_answers[r.replace('A1','A2')];
-			let ai = params.task_answers[r.replace('A1','AI')];
+			let a2 = params.task_answers[r.replace('H1','H2')];
+			let ai = params.task_answers[r.replace('H1','AI')];
 			if(a1.correct) results_data.correct_a1++;
 			if(ai.correct) results_data.correct_ai++;
 			if(a2.correct == ai.correct) results_data.agreed++;

@@ -127,14 +127,16 @@
     }
 
     function saveParticipantResponse() {
-        saveResponse(`T${current_task}_A${steps_counter}`, current_answer, isResponseCorrect(current_answer, current_task));
+        saveResponse(`H${steps_counter}`, current_task, round, current_answer, isResponseCorrect(current_answer, current_task));
         updateInterface();
     }
 
-    function saveResponse(response_name, response_array, response_correct) {
-        final_answers[response_name] = {
+    function saveResponse(response_code, task_id, round_count, response_array, is_response_correct) {
+        final_answers[`R${round_count}_${response_code}`] = {
             answer: JSON.parse(JSON.stringify(response_array)),
-            correct: response_correct,
+            task: task_id,
+            round: round_count,
+            correct: is_response_correct,
             time: Date.now()-time_now
         };
     }
@@ -145,7 +147,7 @@
         if(steps_counter===2) {
             $('#task-submit-button').text($.i18n('study-task-spacial-submit'));
             let ai_suggestion = generateAISuggestion().sort();
-            saveResponse(`T${current_task}_AI`, ai_suggestion, isResponseCorrect(ai_suggestion, current_task));
+            saveResponse('AI', current_task, round, ai_suggestion, isResponseCorrect(ai_suggestion, current_task));
             $('#ai-choices').text(JSON.stringify(ai_suggestion));
             $('#ai-suggestion').show();
             if(round===0) {
@@ -158,7 +160,6 @@
         time_now = Date.now();
     }
 
-    //Generate wrong answer every even step
     function generateAISuggestion() {
         let ai_answer = JSON.parse(JSON.stringify(tasks[current_task]));
         if(round>0 && inject_errors_at.includes(round)) {
@@ -194,7 +195,7 @@
 
         if(round <= TASK_SIZE) {
             let previous_task = current_task;
-            current_task = available_tasks.splice(Math.floor(Math.random()*available_tasks.length), 1);
+            current_task = available_tasks.splice(Math.floor(Math.random()*available_tasks.length), 1)[0];
             $('#mrt-q')
                 .removeClass(`mrt-q${previous_task}`)
                 .addClass(`mrt-q${current_task}`);
