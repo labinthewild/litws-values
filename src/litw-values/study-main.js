@@ -171,8 +171,8 @@ module.exports = (function(exports) {
 		//timeline.push(params.slides.AI_CONVO);
 
 		// //TODO: REMOVE - TASK added alone here for testing!
-		// timeline.push(params.slides.TASK);
-		timeline.push(params.slides.AI_IMPRESSIONS);
+		timeline.push(params.slides.TASK);
+		//timeline.push(params.slides.AI_IMPRESSIONS);
 
 		if(params.ai_impressions_before_task) {
 			timeline.push(params.slides.AI_IMPRESSIONS);
