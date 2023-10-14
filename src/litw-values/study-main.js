@@ -163,23 +163,23 @@ module.exports = (function(exports) {
 		});
 
 		// ******* BEGIN STUDY PROGRESSION ******** //
-		// timeline.push(params.slides.INTRO);
-		// timeline.push(params.slides.IRB);
-		// timeline.push(params.slides.DEMOGRAPHICS);
-		// timeline.push(params.slides.VALUES_Q);
-		// timeline.push(params.slides.AI_CONVO);
+		timeline.push(params.slides.INTRO);
+		timeline.push(params.slides.IRB);
+		timeline.push(params.slides.DEMOGRAPHICS);
+		timeline.push(params.slides.VALUES_Q);
+		timeline.push(params.slides.AI_CONVO);
 
 		// TASK added alone here for testing!
 		// timeline.push(params.slides.TASK);
 		// timeline.push(params.slides.AI_IMPRESSIONS);
 
-		// if(params.ai_impressions_before_task) {
-		// 	timeline.push(params.slides.AI_IMPRESSIONS);
-		// 	timeline.push(params.slides.TASK);
-		// } else {
-		// 	timeline.push(params.slides.TASK);
-		// 	timeline.push(params.slides.AI_IMPRESSIONS);
-		// }
+		if(params.ai_impressions_before_task) {
+			timeline.push(params.slides.AI_IMPRESSIONS);
+			timeline.push(params.slides.TASK);
+		} else {
+			timeline.push(params.slides.TASK);
+			timeline.push(params.slides.AI_IMPRESSIONS);
+		}
 		timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
 		// ******* END STUDY PROGRESSION ******** //
@@ -241,7 +241,16 @@ module.exports = (function(exports) {
 			if(!a1.correct && ai.correct && a2.correct) results_data.ai_helped++;
 		}
 		let r_data = {
-			results: results_data
+			results: results_data,
+			msg_1: $.i18n('study-spacial-result-team-great'),
+			msg_2: $.i18n('study-spacial-result-1')
+		}
+		if(results_data.agreed<3) {
+			r_data.msg_1 = $.i18n('study-spacial-result-team-fair')
+			r_data.msg_2 = $.i18n('study-spacial-result-3')
+		} else if (results_data.agreed == 6) {
+			r_data.msg_1 = $.i18n('study-spacial-result-team-good')
+			r_data.msg_2 = $.i18n('study-spacial-result-2')
 		}
 		if('PID' in params.URL) {
 			r_data.code = LITW.data.getParticipantId();

@@ -8,33 +8,30 @@
 </h5>
 <br>
 {{/if}}
-<h4 style="text-align: center" data-i18n="study-spacial-result-title"></h4>
+<h4 style="text-align: center">{{ msg_1 }}</h4>
+<h5 style="text-align: center">{{ msg_2 }}</h5>
 <br>
 
-<table class="table">
-  <tbody>
-    <tr>
-      <th scope="row" data-i18n="study-spacial-result-item1"></th>
-      <td>{{ results.correct_a1 }}</td>
-    </tr>
-    <tr>
-      <th scope="row" data-i18n="study-spacial-result-item2"></th>
-      <td>{{ results.correct_ai }}</td>
-    </tr>
-    <tr>
-      <th scope="row" data-i18n="study-spacial-result-item3"></th>
-      <td>{{ results.agreed }}</td>
-    </tr>
-    <tr>
-      <th scope="row" data-i18n="study-spacial-result-item4"></th>
-      <td>{{ results.ai_helped }}</td>
-    </tr>
-    <tr>
-      <th scope="row" data-i18n="study-spacial-result-item5"></th>
-      <td>{{ results.ai_wronged }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="row justify-content-center">
+    <table class="table-sm col-sm-4 table-bordered">
+        <thead>
+            <th scope="col"></th>
+            <th scope="col" style="text-align: center" data-i18n="study-spacial-result-table-you"></th>
+            <th scope="col" style="text-align: center" data-i18n="study-spacial-result-table-ai"></th>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row" style="text-align: center" data-i18n="study-spacial-result-table-correct"></th>
+                <td style="text-align: center">{{ results.correct_a1 }}</td>
+                <td style="text-align: center">{{ results.correct_ai }}</td>
+            </tr>
+            <tr>
+                <th scope="row" style="text-align: center" data-i18n="study-spacial-result-table-agreed"></th>
+                <td colspan="2" style="text-align: center">{{ results.agreed }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <br>
 <div id="results-footer"></div>
