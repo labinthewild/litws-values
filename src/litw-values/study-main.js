@@ -43,7 +43,7 @@ module.exports = (function(exports) {
 	params = {
 		currentProgress: 0,
 		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif",
-		"./img/mrt_stim_transparent.png","./img/mrt_stimuli.jpg"],
+		"./img/mrt_stim_transparent.png","./img/mrt_stimuli.jpg", "./img/logo1.jpg"],
 		participant_values: {},
 		values_data: null,
 		convo_data: null,
