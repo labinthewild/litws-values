@@ -166,6 +166,7 @@
   "study-task-spacial-intro-p2": "Your job is to select the TWO SHAPES that are identical to the top one, despite how they have been rotated.",
   "study-task-spacial-intro-p3": "When you submit your choices, your AI collaborator will let you know their opinion like in the message below...",
   "study-task-spacial-intro-p4": "... but in the end, you are the one in charge for going or not with their suggestion.",
+  "study-task-spacial-by_ai": "Sent by AI: ",
   "study-task-spacial-ai-suggestion1": "I think the correct answer is: ",
   "study-task-spacial-header": "Spatial Task: ",
   "study-task-spacial-header-ended": "Thanks for finishing the task! Now you can click the button below to move forward.",

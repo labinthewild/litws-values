@@ -30,16 +30,17 @@
                     <tr id="ai-suggestion" class="hidden">
                         <td colspan="4">
                             <div class="robot-bg message-cloud">
+                                <span data-i18n="study-task-spacial-by_ai" class="font-weight-bold"></span>
                                 <span data-i18n="study-task-spacial-ai-suggestion1"></span>
                                 <span id="ai-choices"></span>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td><img id="mrt-a1" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a1 border" alt="..."></td>
-                        <td><img id="mrt-a2" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a2 border" alt="..."></td>
-                        <td><img id="mrt-a3" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a3 border" alt="..."></td>
-                        <td><img id="mrt-a4" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a4 border" alt="..."></td>
+                        <td><img id="mrt-a1" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a1 border border-3" alt="..."></td>
+                        <td><img id="mrt-a2" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a2 border border-3" alt="..."></td>
+                        <td><img id="mrt-a3" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a3 border border-3" alt="..."></td>
+                        <td><img id="mrt-a4" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a4 border border-3" alt="..."></td>
                     </tr>
                     <tr>
                         <td><button id="btn1" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(1)">1</button></td>
@@ -208,10 +209,11 @@
             }
         } else {
             LITW.study.params.task_answers = final_answers;
-            $('#task-counter').hide();
-            $('#mrt-form').hide();
-            $('#task-ended').show();
-            $('#btn-next-page').show();
+//            $('#task-counter').hide();
+//            $('#mrt-form').hide();
+//            $('#task-ended').show();
+//            $('#btn-next-page').show();
+            $('#btn-next-page').click();
         }
     }
 

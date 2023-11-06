@@ -170,7 +170,7 @@ module.exports = (function(exports) {
 		// timeline.push(params.slides.AI_CONVO);
 
 		// TASK added alone here for testing!
-		// timeline.push(params.slides.TASK);
+		timeline.push(params.slides.TASK);
 		// timeline.push(params.slides.AI_IMPRESSIONS);
 
 		// if(params.ai_impressions_before_task) {
