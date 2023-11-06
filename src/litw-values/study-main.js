@@ -163,24 +163,24 @@ module.exports = (function(exports) {
 		});
 
 		// ******* BEGIN STUDY PROGRESSION ******** //
-		timeline.push(params.slides.INTRO);
-		timeline.push(params.slides.IRB);
-		timeline.push(params.slides.DEMOGRAPHICS);
-		timeline.push(params.slides.VALUES_Q);
-		timeline.push(params.slides.AI_CONVO);
+		// timeline.push(params.slides.INTRO);
+		// timeline.push(params.slides.IRB);
+		// timeline.push(params.slides.DEMOGRAPHICS);
+		// timeline.push(params.slides.VALUES_Q);
+		// timeline.push(params.slides.AI_CONVO);
 
 		// TASK added alone here for testing!
 		// timeline.push(params.slides.TASK);
 		// timeline.push(params.slides.AI_IMPRESSIONS);
 
-		if(params.ai_impressions_before_task) {
-			timeline.push(params.slides.AI_IMPRESSIONS);
-			timeline.push(params.slides.TASK);
-		} else {
-			timeline.push(params.slides.TASK);
-			timeline.push(params.slides.AI_IMPRESSIONS);
-		}
-		timeline.push(params.slides.COMMENTS);
+		// if(params.ai_impressions_before_task) {
+		// 	timeline.push(params.slides.AI_IMPRESSIONS);
+		// 	timeline.push(params.slides.TASK);
+		// } else {
+		// 	timeline.push(params.slides.TASK);
+		// 	timeline.push(params.slides.AI_IMPRESSIONS);
+		// }
+		// timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
 		// ******* END STUDY PROGRESSION ******** //
 	}
@@ -213,9 +213,9 @@ module.exports = (function(exports) {
 		if(Object.keys(params.task_answers).length==0){
 			//TEST DATA
 			params.task_answers = JSON.parse('{' +
-				'"R0_H1":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":6954},"R0_AI":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":6954},"R0_H2":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":2326},' +
+				'"R0_H1":{"answer":[2,3],"task":0,"round":0,"correct":false,"time":6954},"R0_AI":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":6954},"R0_H2":{"answer":[2,3],"task":0,"round":0,"correct":false,"time":2326},' +
 				'"R1_H1":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":14412},"R1_AI":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":14412},"R1_H2":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":2448},' +
-				'"R2_H1":{"answer":[1,4],"task":2,"round":2,"correct":true,"time":18794},"R2_AI":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":18794},"R2_H2":{"answer":[1,4],"task":2,"round":2,"correct":true,"time":7343},' +
+				'"R2_H1":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":18794},"R2_AI":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":18794},"R2_H2":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":7343},' +
 				'"R3_H1":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":27131},"R3_AI":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":27131},"R3_H2":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":2007},' +
 				'"R4_H1":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":16205},"R4_AI":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":16205},"R4_H2":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":1798},' +
 				'"R5_H1":{"answer":[2,4],"task":13,"round":5,"correct":true,"time":13149},"R5_AI":{"answer":[2,3],"task":13,"round":5,"correct":false,"time":13149},"R5_H2":{"answer":[2,4],"task":13,"round":5,"correct":true,"time":4056}' +
@@ -225,8 +225,10 @@ module.exports = (function(exports) {
 		let user_responses = Object.keys(params.task_answers).filter(function(elem){return elem.includes('H1')});
 		let results_data = {
 			correct_a1: 0,
+			correct_a2: 0,
 			correct_ai: 0,
 			agreed: 0,
+			agreed_correct: 0,
 			ai_helped: 0,
 			ai_wronged: 0
 		}
@@ -235,22 +237,29 @@ module.exports = (function(exports) {
 			let a2 = params.task_answers[r.replace('H1','H2')];
 			let ai = params.task_answers[r.replace('H1','AI')];
 			if(a1.correct) results_data.correct_a1++;
+			if(a2.correct) results_data.correct_a2++;
 			if(ai.correct) results_data.correct_ai++;
 			if(a2.correct == ai.correct) results_data.agreed++;
+			if(a2.correct && (a2.correct == ai.correct)) results_data.agreed_correct++;
 			if(a1.correct && !ai.correct && !a2.correct) results_data.ai_wronged++;
 			if(!a1.correct && ai.correct && a2.correct) results_data.ai_helped++;
 		}
-		let r_data = {
+		let r_data = { //baseline: not very good - try again!?
 			results: results_data,
-			msg_1: $.i18n('study-spacial-result-team-great'),
-			msg_2: $.i18n('study-spacial-result-1')
+			msg_1: $.i18n('study-spacial-result-team-fair'),
+			msg_2: $.i18n('study-spacial-result-3')
 		}
-		if(results_data.agreed<3) {
-			r_data.msg_1 = $.i18n('study-spacial-result-team-fair')
-			r_data.msg_2 = $.i18n('study-spacial-result-3')
-		} else if (results_data.agreed == 6) {
+		if (results_data.agreed == 6) { //Too much confidence on AI
 			r_data.msg_1 = $.i18n('study-spacial-result-team-good')
 			r_data.msg_2 = $.i18n('study-spacial-result-2')
+		} else if (results_data.correct_a2 >= 5) { //High levels of correctness
+			r_data.msg_1 = $.i18n('study-spacial-result-team-great')
+			r_data.msg_2 = $.i18n('study-spacial-result-1')
+		} else if (results_data.agreed_correct >= 3) { //good agreement and correctness balance
+			r_data.msg_1 = $.i18n('study-spacial-result-team-good')
+			r_data.msg_2 = $.i18n('study-spacial-result-4')
+		} else if (results_data.agreed <=2) { // low agreement: could have listened to AI more!
+			msg_2: $.i18n('study-spacial-result-5')
 		}
 		if('PID' in params.URL) {
 			r_data.code = LITW.data.getParticipantId();
