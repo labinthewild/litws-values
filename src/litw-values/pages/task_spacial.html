@@ -18,38 +18,42 @@
 
     <div id="mrt-form">
         <img id="mrt-q" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0" alt="...">
-        <div id="mrt-answers" class="table-responsive">
-            <table class="table-borderless" style="margin: auto">
-                <tbody>
-                    <tr id="task-intro-p2" class="hidden">
-                        <td colspan="4">
-                            <p class="text-primary" data-i18n="study-task-spacial-intro-p3"></p>
-                            <p class="text-primary" data-i18n="study-task-spacial-intro-p4"></p>
-                        </td>
-                    </tr>
-                    <tr id="ai-suggestion" class="hidden">
-                        <td colspan="4">
-                            <div class="robot-bg message-cloud">
-                                <span data-i18n="study-task-spacial-by_ai" class="font-weight-bold"></span>
-                                <span data-i18n="study-task-spacial-ai-suggestion1"></span>
-                                <span id="ai-choices"></span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img id="mrt-a1" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a1 border border-3" alt="..."></td>
-                        <td><img id="mrt-a2" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a2 border border-3" alt="..."></td>
-                        <td><img id="mrt-a3" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a3 border border-3" alt="..."></td>
-                        <td><img id="mrt-a4" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a4 border border-3" alt="..."></td>
-                    </tr>
-                    <tr>
-                        <td><button id="btn1" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(1)">1</button></td>
-                        <td><button id="btn2" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(2)">2</button></td>
-                        <td><button id="btn3" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(3)">3</button></td>
-                        <td><button id="btn4" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(4)">4</button></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div id="mrt-answers" class="container">
+            <div id="task-intro-p2" class="row hidden">
+                <div class="col">
+                    <p class="text-primary" data-i18n="study-task-spacial-intro-p3"></p>
+                    <p class="text-primary" data-i18n="study-task-spacial-intro-p4"></p>
+                </div>
+            </div>
+            <div id="ai-suggestion" class="row hidden">
+                <div class="col">
+                    <div class="robot-bg message-cloud">
+                        <span data-i18n="study-task-spacial-by_ai" class="font-weight-bold"></span>
+                        <span data-i18n="study-task-spacial-ai-suggestion1"></span>
+                        <span id="ai-choices"></span>
+                    </div>
+                    <p style="padding-bottom: 10px" data-i18n="study-task-spacial-accept"></p>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <img id="mrt-a1" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a1 border border-3" alt="...">
+                    <button id="btn1" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(1)">1</button>
+                </div>
+                <div class="col">
+                    <img id="mrt-a2" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a2 border border-3" alt="...">
+                    <button id="btn2" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(2)">2</button>
+                </div>
+                <div class="col">
+                    <img id="mrt-a3" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a3 border border-3" alt="...">
+                    <button id="btn3" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(3)">3</button>
+                </div>
+                <div class="col">
+                    <img id="mrt-a4" src="./img/mrt_stim_transparent.png" class="mrt-stimulus mrt-q0-a4 border border-3" alt="...">
+                    <button id="btn4" type="button" class="btn btn-primary btn-lg" onclick="addToAnswerSelection(4)">4</button>
+                </div>
+            </div>
         </div>
         <button id="task-submit-button" type="button" class="btn btn-primary btn-lg col-6 mx-auto d-grid disabled" data-i18n="study-task-spacial-suggestion"
                 style="margin: 20px" onclick="saveParticipantResponse()"></button>
@@ -143,16 +147,16 @@
     }
 
     function updateInterface() {
-        steps_counter += steps_counter;
+        steps_counter++;
 
         if(steps_counter===2) {
             $('#task-submit-button').text($.i18n('study-task-spacial-submit'));
             let ai_suggestion = generateAISuggestion().sort();
             saveResponse('AI', current_task, round, ai_suggestion, isResponseCorrect(ai_suggestion, current_task));
             $('#ai-choices').text(JSON.stringify(ai_suggestion));
-            $('#ai-suggestion').show();
+            $('#ai-suggestion').removeClass('hidden');
             if(round===0) {
-                $('#task-intro-p2').show();
+                $('#task-intro-p2').removeClass('hidden');
             }
         }
         if(steps_counter > FINAL_STEP) {
@@ -183,15 +187,15 @@
         current_answer = [];
 
         $('#task-counter-text').text(`${round}/${TASK_SIZE}`);
-        $('#ai-suggestion').hide();
+        $('#ai-suggestion').addClass('hidden');
         $('#task-submit-button')
             .addClass('disabled')
             .text($.i18n('study-task-spacial-suggestion'));
 
         if(round === 1){
-            $('#task-intro').hide();
-            $('#task-intro-p2').hide();
-            $('#task-counter').show();
+            $('#task-intro').addClass('hidden');
+            $('#task-intro-p2').addClass('hidden');
+            $('#task-counter').removeClass('hidden');
         }
 
         if(round <= TASK_SIZE) {
@@ -209,10 +213,6 @@
             }
         } else {
             LITW.study.params.task_answers = final_answers;
-//            $('#task-counter').hide();
-//            $('#mrt-form').hide();
-//            $('#task-ended').show();
-//            $('#btn-next-page').show();
             $('#btn-next-page').click();
         }
     }

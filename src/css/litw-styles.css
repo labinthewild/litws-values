@@ -116,12 +116,6 @@ body {
 	vertical-align: middle;
 }
 
-.instructions-stim-container img {
-	height: 150px;
-	margin-top: 35px;
-	margin-bottom: 35px;
-}
-
 #trials {
 	text-align: center;
 }
