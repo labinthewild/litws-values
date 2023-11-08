@@ -52,14 +52,16 @@
     let user_interrupted_convo = false;
     let convo_data = {};
 
-    let show_message = function (msg_id, take_time=MSG_TIMEOUT, callback) {
+    let show_message = function (msg_id, take_time=MSG_TIMEOUT, callback=()=>{}) {
         return new Promise(function(resolve, reject) {
             $(`#${msg_id}_snippet`).show().delay(take_time/3).animate({opacity: 1}, take_time/10);
             $(`#${msg_id}_snippet`)[0].scrollIntoView();
             setTimeout(function () {
                 $(`#${msg_id}_loading`).fadeOut(take_time/3, function () {
                     $(`#${msg_id}_message`).fadeIn(take_time/3);
-                    $(`#${msg_id}_sent`).fadeIn(take_time/3);
+                    $(`#${msg_id}_sent`).fadeIn(take_time/3, function (){
+                        $(`#${msg_id}_sent`)[0].scrollIntoView();
+                    });
                 });
                 callback();
             }, take_time);
