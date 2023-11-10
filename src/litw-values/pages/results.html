@@ -1,37 +1,56 @@
-
-<h3 class="bolded-blue" style="text-align: center" data-i18n="litw-result-header"></h3>
+<div>
+    <h3 class="bolded-blue" style="text-align: center" data-i18n="litw-result-header"></h3>
+    <br>
+    {{#if code}}
+    <h5 style="text-align: center">
+        <span data-i18n="litw-result-code"></span>
+        <span>{{ code }}</span>
+    </h5>
+    <br>
+    {{/if}}
+    <h4 style="text-align: center">{{ msg_1 }}</h4>
+    <h5 style="text-align: center">
+        <span>{{ msg_2_1 }}</span>
+        <span>{{ msg_2_2 }}</span>
+    </h5>
+</div>
 <br>
-{{#if code}}
-<h5 style="text-align: center">
-    <span data-i18n="litw-result-code"></span>
-    <span>{{ code }}</span>
-</h5>
-<br>
-{{/if}}
-<h4 style="text-align: center">{{ msg_1 }}</h4>
-<h5 style="text-align: center">{{ msg_2 }}</h5>
-<br>
-
-<div class="row justify-content-center">
-    <table class="table-sm col-sm-4 table-bordered">
-        <thead>
-            <th scope="col"></th>
-            <th scope="col" style="text-align: center" data-i18n="study-spacial-result-table-you"></th>
-            <th scope="col" style="text-align: center" data-i18n="study-spacial-result-table-ai"></th>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row" style="text-align: center" data-i18n="study-spacial-result-table-correct"></th>
-                <td style="text-align: center">{{ results.correct_a2 }}</td>
-                <td style="text-align: center">{{ results.correct_ai }}</td>
-            </tr>
-            <tr>
-                <th scope="row" style="text-align: center" data-i18n="study-spacial-result-table-agreed"></th>
-                <td colspan="2" style="text-align: center">{{ results.agreed }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div style="text-align: center">
+    <p id="show_table" class="link-secondary" data-i18n="study-spacial-result-table-show" onclick="showTable()"></p>
+    <div id="results_table" class="row justify-content-center hidden">
+        <p data-i18n="study-spacial-result-table-intro"></p>
+        <table class="table-sm col-sm-4 table-bordered">
+            <thead>
+                <th scope="col" style="font-weight: normal"></th>
+                <th scope="col" data-i18n="study-spacial-result-table-you"></th>
+                <th scope="col" data-i18n="study-spacial-result-table-ai"></th>
+                <th scope="col" data-i18n="study-spacial-result-table-final"></th>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row" style="text-align: center" data-i18n="study-spacial-result-table-correct"></th>
+                    <td style="text-align: center">{{ results.correct_a1 }}</td>
+                    <td style="text-align: center">{{ results.correct_ai }}</td>
+                    <td style="text-align: center">{{ results.correct_a2 }}</td>
+                </tr>
+                <tr>
+                    <th scope="row" style="text-align: center" data-i18n="study-spacial-result-table-agreed"></th>
+                    <td style="text-align: center"> - </td>
+                    <td style="text-align: center">{{ results.agreed_ai }}</td>
+                    <td style="text-align: center">{{ results.agreed_a2 }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <br>
 <div id="results-footer"></div>
+
+<script type="text/javascript">
+    let showTable = function () {
+        $("#show_table").addClass("hidden");
+        $("#results_table").removeClass("hidden");
+        LITW.tracking.recordAction("results::click::show_results_table")
+    }
+</script>
