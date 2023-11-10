@@ -35,7 +35,11 @@
 		submitData("elapsed_time", {slide: slide_name, total_time: elapsed_time_msecs});
 	},
 
-	//TODO: Specify this better!
+    recordAction = function(description) {
+		submitData("action", description);
+    },
+
+	//ToDo: Should Sharing be a type of ACTION?
     recordSharing = function(description) {
 		submitData("sharing", description);
     }
@@ -44,6 +48,7 @@
  	exports.tracking = {};
 	exports.tracking.recordSlideVisit = recordCheckpoint;
 	exports.tracking.recordSlideTime = recordSlideTime;
+	exports.tracking.recordAction = recordAction;
     exports.tracking.recordSharing = recordSharing;
 
  })( window.LITW = window.LITW || {} );
