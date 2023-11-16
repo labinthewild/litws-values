@@ -312,14 +312,14 @@ module.exports = (function(exports) {
 				share_title: $.i18n('litw-irb-header'),
 				share_text: $.i18n('litw-template-title'),
 				more_litw_studies: [{
-					study_url: "https://labinthewild.org/studies/peripheral-vision/",
-					study_logo: "http://labinthewild.org/images/virtual-chinrest.jpg",
+					study_url: "https://labinthewild.org/studies/decision-making/",
+					study_logo: "http://labinthewild.org/images/decision-making-logo.jpg",
 					study_slogan: $.i18n('litw-more-study1-slogan'),
 					study_description: $.i18n('litw-more-study1-description'),
 				},
 				{
-					study_url: "https://labinthewild.org/studies/formality-security/",
-					study_logo: "http://labinthewild.org/images/formality-logo.jpg",
+					study_url: "https://labinthewild.org/studies/techno-utopia/",
+					study_logo: "http://labinthewild.org/images/mixed-reality.png",
 					study_slogan: $.i18n('litw-more-study2-slogan'),
 					study_description: $.i18n('litw-more-study2-description'),
 				}]
