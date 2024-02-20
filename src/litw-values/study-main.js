@@ -12,12 +12,13 @@
  *************************************************************/
 
 // load webpack modules
-window.$ = window.jquery = require("jquery");
-require("jquery-ui-bundle");
+window.$ = window.jQuery = require("jquery");
 require("../js/jquery.i18n");
 require("../js/jquery.i18n.messagestore");
 require("bootstrap");
+require("jquery-ui-bundle");
 require("alpaca");
+var _ = require('lodash');
 import * as d3_csv from "d3-fetch";
 var LITW_STUDY_CONTENT= require("./src/data");
 var introTemplate = require("./pages/introduction.html");
@@ -42,6 +43,7 @@ module.exports = (function(exports) {
 	var timeline = [],
 	params = {
 		currentProgress: 0,
+		study_recommendation: [],
 		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif",
 		"./img/mrt_stim_transparent.png","./img/mrt_stimuli.jpg", "./img/logo1.jpg"],
 		participant_values: {},
@@ -308,21 +310,10 @@ module.exports = (function(exports) {
 	function addResultsFooter(){
 		$("#results-footer").html(resultsFooter(
 			{
-				share_url: "https://labinthewild.org",
+				share_url: window.location.href,
 				share_title: $.i18n('litw-irb-header'),
 				share_text: $.i18n('litw-template-title'),
-				more_litw_studies: [{
-					study_url: "https://labinthewild.org/studies/decision-making/",
-					study_logo: "http://labinthewild.org/images/decision-making-logo.jpg",
-					study_slogan: $.i18n('litw-more-study1-slogan'),
-					study_description: $.i18n('litw-more-study1-description'),
-				},
-				{
-					study_url: "https://labinthewild.org/studies/techno-utopia/",
-					study_logo: "http://labinthewild.org/images/mixed-reality.png",
-					study_slogan: $.i18n('litw-more-study2-slogan'),
-					study_description: $.i18n('litw-more-study2-description'),
-				}]
+				more_litw_studies: params.study_recommendation
 			}
 		));
 	}
@@ -343,47 +334,54 @@ module.exports = (function(exports) {
 		if( Object.keys(params.URL).length > 0 ) {
 			LITW.data.submitData(params.URL,'litw:paramsURL');
 		}
+		// populate study recommendation
+		LITW.engage.getStudiesRecommendation(2, (studies_list) => {
+			params.study_recommendation = studies_list;
+		});
 	}
 
-	// when the page is loaded, start the study!
-	$(document).ready(function() {
-		//TODO This methods should be something like act1().then.act2().then...
-		//... it is close enough to that... maybe the translation need to be encapsulated next.
-		// get initial data from database (maybe needed for the results page!?)
-		//readSummaryData();
-
+	function startExperiment(){
 		// determine and set the study language
-		$.i18n().locale = 'en'; //LITW.locale.getLocale();
-		$.i18n().load({
-			'en': 'src/i18n/en.json',
-		}).done( function(){
-			$('head').i18n();
-			$('body').i18n();
+		$.i18n().locale = LITW.locale.getLocale();
+		var languages = {
+			'en': './src/i18n/en.json?v=1.0',
+		};
+		// ONLY ENGLISH IS AVAILABLE!!!
+		let toLoad = {};
+		toLoad['en'] = languages['en'];
+		$.i18n().load(toLoad).done(
+			function() {
+				$('head').i18n();
+				$('body').i18n();
 
-			LITW.utils.showSlide("img-loading");
-			//start the study when resources are preloaded
-			jsPsych.pluginAPI.preloadImages( params.preLoad,
-				function() {
-					//TODO: This is a strange place to put this file loading!
-					d3_csv.csv("src/i18n/conversations-en.csv").then(function(data) {
-						params.convo_data = data;
-						initStudy();
-						configureStudy();
-						startStudy();
-					});
-				},
+				LITW.utils.showSlide("img-loading");
+				//start the study when resources are preloaded
+				jsPsych.pluginAPI.preloadImages(params.preLoad,
+					function() {
+						//TODO: This is a strange place to put this file loading!
+						d3_csv.csv("src/i18n/conversations-en.csv").then(function(data) {
+							params.convo_data = data;
+							initStudy();
+							configureStudy();
+							startStudy();
+						});
+					},
+					// update loading indicator
+					function (numLoaded) {
+						$("#img-loading").html(loadingTemplate({
+							msg: $.i18n("litw-template-loading"),
+							numLoaded: numLoaded,
+							total: params.preLoad.length
+						}));
+					}
+				);
+			});
+	}
 
-				// update loading indicator
-				function(numLoaded) {
-					$("#img-loading").html(loadingTemplate({
-						msg: $.i18n("litw-template-loading"),
-						numLoaded: numLoaded,
-						total: params.preLoad.length
-					}));
-				}
-			);
-		});
+	$(document).ready(function() {
+		startExperiment();
 	});
+
 	exports.study = {};
 	exports.study.params = params
 
