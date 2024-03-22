@@ -42,6 +42,7 @@ module.exports = (function(exports) {
 	//TODO: Global variables for data across slides... bad design! :(
 	var timeline = [],
 	params = {
+		study_id: 'b2f0cd82-7962-40b4-814f-7875c45bf4ff',
 		currentProgress: 0,
 		study_recommendation: [],
 		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif",
