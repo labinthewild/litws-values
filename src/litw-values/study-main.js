@@ -6,7 +6,7 @@
  *
  * Author: LITW Team.
  *
- * © Copyright 2017-2023 LabintheWild.
+ * © Copyright 2017-20234 LabintheWild.
  * For questions about this file and permission to use
  * the code, contact us at info@labinthewild.org
  *************************************************************/
@@ -18,6 +18,7 @@ require("../js/jquery.i18n.messagestore");
 require("bootstrap");
 require("jquery-ui-bundle");
 require("alpaca");
+require("handlebars");
 var _ = require('lodash');
 import * as d3_csv from "d3-fetch";
 var LITW_STUDY_CONTENT= require("./src/data");
@@ -27,13 +28,11 @@ var demographicsTemplate = require("./pages/demographics.html");
 var valuesTemplate = require("./pages/values.html");
 var conversationTemplate = require("./pages/ai_conversation.html");
 var impressionsTemplate = require("./pages/postStudyQuest.html");
-var taskTemplate = require("./pages/task_spacial.html");
 var loadingTemplate = require("./pages/loading.html");
 var progressTemplate = require("./pages/progress.html");
 var commentsTemplate = require("./pages/comments.html");
-var resultsTemplate = require("./pages/results.html");
+var resultsTemplate = require("./pages/resultsValuesMap.html");
 var resultsFooter = require("./pages/results-footer.html");
-require("../js/litw/jspsych-display-info");
 require("../js/litw/jspsych-display-slide");
 
 module.exports = (function(exports) {
@@ -45,8 +44,7 @@ module.exports = (function(exports) {
 		study_id: 'b2f0cd82-7962-40b4-814f-7875c45bf4ff',
 		currentProgress: 0,
 		study_recommendation: [],
-		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif",
-		"./img/mrt_stim_transparent.png","./img/mrt_stimuli.jpg", "./img/logo1.jpg"],
+		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif", "./img/icon1.jpg"],
 		participant_values: {},
 		values_data: null,
 		convo_data: null,
@@ -55,7 +53,6 @@ module.exports = (function(exports) {
 		convo_length_min: 4,
 		convo_snippets: [],
 		ai_impressions_before_task: false,
-		task_answers: {},
 		slides: {
 			INTRO: {
 				name: "study_introduction",
@@ -119,20 +116,6 @@ module.exports = (function(exports) {
 					LITW.data.submitStudyData(impressions_data);
 				}
 			},
-			TASK: {
-				name: "task",
-				type: "display-slide",
-				template: taskTemplate,
-				display_next_button: false,
-				display_element: $("#task"),
-				finish: function(){
-					let task_data= {
-						task_answers: params.task_answers
-					}
-					LITW.data.submitStudyData(task_data);
-				}
-
-			},
 			COMMENTS: {
 				name: "comments",
 				type: "display-slide",
@@ -151,7 +134,7 @@ module.exports = (function(exports) {
 			RESULTS: {
 				type: "call-function",
 				func: function(){
-					showResults();
+					showResultsValueMap();
 				}
 			}
 		}
@@ -160,30 +143,14 @@ module.exports = (function(exports) {
 
 	function configureStudy() {
 		generateAIConversation();
-		params.ai_impressions_before_task = Math.random()>0.5;
-		LITW.data.submitStudyConfig({
-			ai_impressions_before_task: params.ai_impressions_before_task,
-		});
-
 		// ******* BEGIN STUDY PROGRESSION ******** //
 		timeline.push(params.slides.INTRO);
-		timeline.push(params.slides.IRB);
-		timeline.push(params.slides.DEMOGRAPHICS);
+		// timeline.push(params.slides.IRB);
+		// timeline.push(params.slides.DEMOGRAPHICS);
 		timeline.push(params.slides.VALUES_Q);
 		timeline.push(params.slides.AI_CONVO);
-
-		// TASK added alone here for testing!
-		// timeline.push(params.slides.TASK);
-		// timeline.push(params.slides.AI_IMPRESSIONS);
-
-		if(params.ai_impressions_before_task) {
-			timeline.push(params.slides.AI_IMPRESSIONS);
-			timeline.push(params.slides.TASK);
-		} else {
-			timeline.push(params.slides.TASK);
-			timeline.push(params.slides.AI_IMPRESSIONS);
-		}
-		timeline.push(params.slides.COMMENTS);
+		timeline.push(params.slides.AI_IMPRESSIONS);
+		// timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
 		// ******* END STUDY PROGRESSION ******** //
 	}
@@ -210,84 +177,6 @@ module.exports = (function(exports) {
 			//on_finish: showResults,
 			display_element: $("#trials")
 		});
-	}
-
-	function showResults() {
-		if(Object.keys(params.task_answers).length==0){
-			//TEST DATA
-			let great = JSON.parse('{' +
-				'"R0_H1":{"answer":[2,3],"task":0,"round":0,"correct":false,"time":6954},"R0_AI":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":6954},"R0_H2":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":2326},' +
-				'"R1_H1":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":14412},"R1_AI":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":14412},"R1_H2":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":2448},' +
-				'"R2_H1":{"answer":[1,4],"task":2,"round":2,"correct":true,"time":18794},"R2_AI":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":18794},"R2_H2":{"answer":[1,4],"task":2,"round":2,"correct":true,"time":7343},' +
-				'"R3_H1":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":27131},"R3_AI":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":27131},"R3_H2":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":2007},' +
-				'"R4_H1":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":16205},"R4_AI":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":16205},"R4_H2":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":1798},' +
-				'"R5_H1":{"answer":[2,4],"task":13,"round":5,"correct":true,"time":13149},"R5_AI":{"answer":[2,3],"task":13,"round":5,"correct":false,"time":13149},"R5_H2":{"answer":[2,4],"task":13,"round":5,"correct":true,"time":4056}' +
-			'}')
-			let good = JSON.parse('{' +
-				'"R0_H1":{"answer":[2,3],"task":0,"round":0,"correct":false,"time":6954},"R0_AI":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":6954},"R0_H2":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":2326},' +
-				'"R1_H1":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":14412},"R1_AI":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":14412},"R1_H2":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":2448},' +
-				'"R2_H1":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":18794},"R2_AI":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":18794},"R2_H2":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":7343},' +
-				'"R3_H1":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":27131},"R3_AI":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":27131},"R3_H2":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":2007},' +
-				'"R4_H1":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":16205},"R4_AI":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":16205},"R4_H2":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":1798},' +
-				'"R5_H1":{"answer":[2,4],"task":13,"round":5,"correct":true,"time":13149},"R5_AI":{"answer":[2,3],"task":13,"round":5,"correct":false,"time":13149},"R5_H2":{"answer":[2,3],"task":13,"round":5,"correct":false,"time":4056}' +
-			'}')
-			let fair = JSON.parse('{' +
-				'"R0_H1":{"answer":[2,3],"task":0,"round":0,"correct":false,"time":6954},"R0_AI":{"answer":[1,2],"task":0,"round":0,"correct":true,"time":6954},"R0_H2":{"answer":[2,3],"task":0,"round":0,"correct":false,"time":2326},' +
-				'"R1_H1":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":14412},"R1_AI":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":14412},"R1_H2":{"answer":[1,4],"task":10,"round":1,"correct":true,"time":2448},' +
-				'"R2_H1":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":18794},"R2_AI":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":18794},"R2_H2":{"answer":[1,2],"task":2,"round":2,"correct":false,"time":7343},' +
-				'"R3_H1":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":27131},"R3_AI":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":27131},"R3_H2":{"answer":[1,3],"task":1,"round":3,"correct":true,"time":2007},' +
-				'"R4_H1":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":16205},"R4_AI":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":16205},"R4_H2":{"answer":[1,4],"task":18,"round":4,"correct":true,"time":1798},' +
-				'"R5_H1":{"answer":[2,4],"task":13,"round":5,"correct":true,"time":13149},"R5_AI":{"answer":[2,3],"task":13,"round":5,"correct":false,"time":13149},"R5_H2":{"answer":[2,3],"task":13,"round":5,"correct":false,"time":4056}' +
-			'}')
-			params.task_answers = great;
-		}
-
-		let user_responses = Object.keys(params.task_answers).filter(function(elem){return elem.includes('H1')});
-		let results_data = {
-			correct_a1: 0,
-			correct_a2: 0,
-			correct_ai: 0,
-			agreed_ai: 0,
-			agreed_a2: 0,
-			agreed_correct: 0,
-			ai_helped: 0,
-			ai_wronged: 0
-		}
-		for(let r of user_responses) {
-			let a1 = params.task_answers[r];
-			let a2 = params.task_answers[r.replace('H1','H2')];
-			let ai = params.task_answers[r.replace('H1','AI')];
-			if(a1.correct) results_data.correct_a1++;
-			if(a2.correct) results_data.correct_a2++;
-			if(ai.correct) results_data.correct_ai++;
-			if(a1.correct == ai.correct) results_data.agreed_ai++;
-			if(a2.correct == ai.correct) results_data.agreed_a2++;
-			if(a2.correct && (a2.correct == ai.correct)) results_data.agreed_correct++;
-			if(a1.correct && !ai.correct && !a2.correct) results_data.ai_wronged++;
-			if(!a1.correct && ai.correct && a2.correct) results_data.ai_helped++;
-		}
-		let r_data = { //baseline: not very good - trust the AI more!?
-			results: results_data,
-			msg_1: $.i18n('study-spacial-result-team-fair_2'),
-			msg_2_1: $.i18n(`study-spacial-result-correct_${results_data.correct_a2}`),
-			msg_2_2: $.i18n('study-spacial-result-msg-fair')
-		}
-		if (results_data.agreed_a2 == 6) { //Too much confidence on AI
-			r_data.msg_1 = $.i18n('study-spacial-result-team-good')
-			r_data.msg_2_2 = $.i18n('study-spacial-result-msg-good')
-		} else if (results_data.correct_a2 >= 5) { //High levels of correctness
-			r_data.msg_1 = $.i18n('study-spacial-result-team-great')
-			r_data.msg_2_2 = $.i18n(`study-spacial-result-msg-great_${results_data.correct_a2}`)
-		} else if (results_data.correct_a2 == 3) { //Just average
-			r_data.msg_1 = $.i18n('study-spacial-result-team-fair_1')
-		}
-		if('PID' in params.URL) {
-			r_data.code = LITW.data.getParticipantId();
-		}
-		$("#results").html(resultsTemplate(r_data));
-		addResultsFooter();
-		$("#results").i18n();
-		LITW.utils.showSlide("results");
 	}
 
 	function showResultsValueMap() {
