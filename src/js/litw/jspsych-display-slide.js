@@ -38,7 +38,7 @@ module.exports = jsPsych.plugins["display-slide"] = (function() {
         display_element.i18n();
 
         LITW.utils.showNextButton(function() {
-            LITW.tracking.recordSlideTime(display_element[0].id, getSlideTime());
+            LITW.tracking.recordSlideTime(trial.name, getSlideTime());
             if(trial.finish) trial.finish();
             display_element.empty();
             jsPsych.finishTrial();
@@ -49,7 +49,7 @@ module.exports = jsPsych.plugins["display-slide"] = (function() {
             $('#btn-next-page').hide();
         }
         LITW.utils.showSlide(display_element[0].id);
-        LITW.tracking.recordSlideVisit(display_element[0].id);
+        LITW.tracking.recordSlideVisit(trial.name);
     };
 
     return plugin;

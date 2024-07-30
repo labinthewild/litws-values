@@ -1,45 +1,26 @@
-!!! This project is **under heavy refactoring** to be soon a cool and modern Node.js project.
-!!! Soon enough (begining of 2023) we should start shipping stable versions and have a `main` branch for less adventurous creators.
+*IF you end up using this code, please make sure to change this README to reflect the reality of your study!*
 
-# LabintheWild Study Templates - V2
+# The LabintheWild Study Templates
 
-This repository bundles together LabintheWild study templates and instructions to support developers with creating their own online studies.
+This repository bundles together the LabintheWild starter code and instructions to support developers/researchers 
+creating their own online studies. Check our [HOW-TO](docs/0-TheStudyTemplate.md)!
 
-This project is meant to help people with basic web development skills -- meaning HTML, CSS, JavaScript, and Node -- to bootstrap a LabintheWild study. Using it is not at all mandatory to be part of our researchers' community as a LabintheWild study is fundamentally implemented as a web application. If you have your own choices of technology you're free to use them as long as the study comply with some [design guidelines presented in our tutorial](http://tutorial.labinthewild.org). 
+## Cite
 
-Please consider submitting ideas and code to improve either the tutorial or this templates. This can be done by [submitting an issue](https://github.com/labinthewild/LITW-study-templates/issues), creating a pull request for an open issue, or emailing us at: *tech [at] labinthewild.org*
-
-
-## Project structure
-
-  * *DOCS*: some documentation and howto guides.
-  * *SRC*: reusable resources to build a LabintheWild study
-  
-How is the *SRC* folder organized?
-
-  * **css**: Style sheet files;
-  * **dist**: Where built studies (JS bundles) will be saved;
-  * **img**: All sorts of images used in your study;
-  * **include**: Configuration and scripting files (mainly to deal with deployment and datasets);
-  * **js**: JS files that we chose not to install through NPM (for example, the LITW utility modules);
-  * **templates**: HTML templates for the study pages -- [we use the Handlebars.js library](http://handlebarsjs.com/) to handle these.
-
-Moreover, we have added some studies to get you inspired:
-
-  * **STUDY-CATS**: our beloved demo study presents choices of cats to help your find your future kitty.
-  * **STUDY-BASE**: the code you will likely want to use as the baseline of a new study.
+If this code helps you with your research, please cite it:
+*The LabintheWild Team. The LabintheWild study templates. (2024) [Online]. Available: https://studies.labinthewild.org/code/study-template.html*
 
 
-## What now?
+## Donate
 
-Good to know that you got to this point. =)
+The LabintheWild team has put year of research, design, and testing in this project.
+Please consider [donating](https://web.labinthewild.org/donating) to our project, and supporting our mission to 
+make science and technology less biased towards [WEIRD people](https://dl.acm.org/doi/10.1145/3411764.3445488).
 
-Please visit the docs folder and learn:
 
-  * [How to install and run these templates?](docs/1-Installation.md)
-  * [What's the current 'code architecture'?](docs/2-CodeExecutionOverview.md)
-  * [How to change a page's text?](docs/3-ChangePageText.md)
-  * [How to create a new study page?](docs/4-AddNewPage.md)
-  * [How to include a page containing a survey?](docs/5-CreateSurvey.md)
-  * [How to retrieve data from the database?](docs/6-GetDataFromDatabase.md)
-  * [How to structure and retrieve your study data?](docs/7-ManageData.md)
+## Contribute
+
+Please consider contributing ideas and code to improve this template package. 
+This can be done by [submitting an issue](https://github.com/labinthewild/LITW-study-templates/issues). 
+Be aware that we will only accept code contribution through PULL REQUEST that implement changes openly discussed and assigned issues.
+
