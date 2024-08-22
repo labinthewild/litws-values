@@ -6,7 +6,7 @@
  *
  * Author: LITW Team.
  *
- * © Copyright 2017-20234 LabintheWild.
+ * © Copyright 2017-2024 LabintheWild.
  * For questions about this file and permission to use
  * the code, contact us at info@labinthewild.org
  *************************************************************/
@@ -41,7 +41,7 @@ module.exports = (function(exports) {
 	//TODO: Global variables for data across slides... bad design! :(
 	var timeline = [],
 	params = {
-		study_id: 'b2f0cd82-7962-40b4-814f-7875c45bf4ff',
+		study_id: '57ef9f1a-82a3-4ebf-9d47-10c12c7da10a',
 		currentProgress: 0,
 		study_recommendation: [],
 		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif", "./img/icon1.jpg"],
