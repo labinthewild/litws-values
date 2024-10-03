@@ -1,12 +1,21 @@
 var path = require("path");
 
 var config = {
+<<<<<<<< HEAD:src/litw-values/webpack.config.js
     mode: 'development',
   // mode: 'production',
   entry: path.join(__dirname, "study-main.js"),
   output: {
     path: path.join(__dirname, "js"),
     filename: "bundle-litw-values.min.js"
+========
+  // mode: 'development',
+  mode: 'production',
+  entry: path.join(__dirname, "study.js"),
+  output: {
+    path: path.join(__dirname, "js"),
+    filename: "study-bundle.min.js"
+>>>>>>>> v2-dev-base:src/frame-line/webpack.config.js
   },
   module: {
     rules: [

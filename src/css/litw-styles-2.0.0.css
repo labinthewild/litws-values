@@ -1,7 +1,8 @@
 /*************************************************************
  * Base stylesheet for LabintheWild.
- *
+ * 
  * Author: LITW team
+ * 
  * © Copyright 2024 LabintheWild
  * For questions about this file and permission to use
  * the code, contact us at info@labinthewild.org
@@ -19,13 +20,14 @@ html, body {
 }
 
 @media only screen and (min-width: 960px) {
-	.instructions-stim-container {
-		text-align: center;
+	.slide {
+		display: none;
 		width: 800px;
 		margin: 0 auto;
 	}
 
-	#comments {
+	.instructions-stim-container {
+		text-align: center;
 		width: 800px;
 		margin: 0 auto;
 	}
@@ -36,12 +38,13 @@ html, body {
 }
 
 @media only screen and (max-width: 960px) {
-	.instructions-stim-container {
-		text-align: center;
+	.slide {
+		display: none;
+		margin: 0 auto;
 	}
 
-	#comments {
-		margin: 0 auto;
+	.instructions-stim-container {
+		text-align: center;
 	}
 
 	.litw-flex-orientation {
@@ -58,22 +61,18 @@ body {
 	line-height: 22px;
 	color: #222;
 }
-#wrapper, #content {
+#wrapper, #content { 
 	margin: 0 auto;
 	padding-bottom: 5rem;
 }
-#header {
+#header { 
 	margin-top: 0px;
 }
-#share-text {
-	float:right;
-	margin-top:15px;
-	font-size: 13px;
-	color:#888;
-}
-
-.slide {
-	display: none;
+#share-text { 
+	float:right; 
+	margin-top:15px; 
+	font-size: 13px; 
+	color:#888; 
 }
 
 .irb-paragraph {
@@ -100,9 +99,9 @@ body {
 	width: 710px;
 	border: 0px;
 }
-#likert-scale input {
-	margin-left: 15px;
-	margin-right: 15px;
+#likert-scale input { 
+	margin-left: 15px; 
+	margin-right: 15px; 
 }
 
 .litw-button-group-container {
@@ -202,8 +201,8 @@ body {
 	margin-bottom: 30px;
 }
 
-#comments {
-	text-align: center;
+#comments { 
+	text-align: center; 
 }
 textarea.comments-box, textarea.comments_box {
 	padding: 15px;
@@ -230,103 +229,6 @@ textarea.comments-box, textarea.comments_box {
 	font-weight: bold;
 	margin-bottom: 20px;
 }
-.litw-results-content {
-	width: 90%;
-	margin: 40px auto;
-}
-.litw-results-footer-content {
-	background-color: #EEEEEE;
-	padding: 40px;
-	width: 90%;
-	margin: 0 auto;
-}
-.litw-results-footer .litw-separator {
-	margin: 0;
-	padding: 0;
-	height: 0;
-}
-.litw-results-footer-header {
-	font-size: 1.5em;
-	margin-bottom: 30px;
-}
-.litw-study-link {
-	background-color: white;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	border-radius: 10px;
-	padding: 15px;
-	min-height: 105px;
-}
-
-.litw-study-link .row {
-	margin-right: 0px;
-}
-
-.litw-study-link-img {
-	width: 100%;
-}
-.litw-study-link-description {
-}
-.litw-study-link-text-container {
-}
-.litw-results-number {
-	line-height: 1.3em;
-	display: inline-block;
-	text-align: center;
-	font-size: 1.4em;
-	font-weight: bold;
-	border-radius: 50%;
-	width: 30px;
-	height: 30px;
-	border: 2px dotted #999999;
-	margin-right: 15px;
-}
-.litw-footer-element {
-	margin-top: 25px;
-	margin-bottom: 25px;
-}
-.litw-results-sharing-body {
-	margin-left: 50px;
-}
-.litw-results-study-links {
-	margin-left: 50px;
-}
-.litw-results-footer-content .fb-like {
-	margin-top: 5px;
-	margin-bottom: 15px;
-	margin-left: 50px;
-}
-.litw-results-sharing-header select {
-	max-width: 150px;
-}
-.litw-email-container {
-	background-color: #EEEEEE;
-	margin-bottom: 20px;
-	margin-top: 20px;
-}
-.litw-results-complete-msg {
-	text-align: right;
-	color: #2db300;
-	font-style: italic;
-	float: right;
-	padding-top: 8px;
-	display: none;
-}
-.litw-email-container .litw-separator {
-	margin: 0;
-	padding: 0;
-	height: 0;
-}
-.litw-email-content {
-	padding: 25px;
-}
-
-.litw-results-questions {
-	border: 1px solid gray;
-	width: 80%;
-}
-
-.litw-results-questions type
 
 /********************************************
  * BUTTONS
@@ -349,7 +251,7 @@ textarea.comments-box, textarea.comments_box {
 	user-select: none;
 	cursor: pointer;
 }
-.btn-next-page:active, #btn-next-page:active {
+.btn-next-page:active, #btn-next-page:active { 
 	background: url("../img/btn-next-active.png");
 }
 
@@ -358,9 +260,9 @@ textarea.comments-box, textarea.comments_box {
  * IMAGES
  *******************************************/
 
-#logo {
-	float: left;
-	margin-top: 30px;
+#logo { 
+	float: left; 
+	margin-top: 30px; 
 	margin-bottom: 15px;
 	width: 300px;
 }
@@ -413,7 +315,7 @@ select {
 	margin-bottom: 15px;
 	border: 1pt solid transparent;
 	border-radius: 7px;
-	padding: 3px;
+	padding: 3px;	
 }
 .expansion-element {
 	margin-left: 20px;
@@ -598,12 +500,12 @@ select {
  * LINKS
  *******************************************/
 
-a:link, a:visited, a:hover {
-	text-decoration: none;
-	color: #0099cc;
+a:link, a:visited, a:hover { 
+	text-decoration: none; 
+	color: #0099cc; 
 }
-a:active {
-	color: #003b4e;
+a:active { 
+	color: #003b4e; 
 }
 
 
@@ -635,13 +537,13 @@ a:active {
 	margin-top: -50px;
   margin-left: -50px;
 }
-.warn {
-	color: #f00;
-	font-weight: bold;
+.warn { 
+	color: #f00; 
+	font-weight: bold; 
 }
-.bolded-blue {
-	font-weight: bold;
-	color: #3f6379;
+.bolded-blue { 
+	font-weight: bold; 
+	color: #3f6379; 
 }
 .bolded-italic {
 	font-weight: bold;
@@ -698,8 +600,4 @@ a:active {
 	margin: 5px;
 	max-width: 99%;
 	height: 98%
-}
-
-ol .active {
-	background-color: #003b4e;
 }

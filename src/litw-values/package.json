@@ -1,6 +1,11 @@
 {
+<<<<<<<< HEAD:src/litw-values/package.json
   "name": "litw-values",
   "version": "1.0.0",
+========
+  "name": "litw-frameline",
+  "version": "2.0.0",
+>>>>>>>> v2-dev-base:src/frame-line/package.json
   "dependencies": {
     "alpaca": "^1.5.27",
     "bootstrap": "^4.3.1",
@@ -24,11 +29,19 @@
   },
   "repository": {
     "type": "git",
+<<<<<<<< HEAD:src/litw-values/package.json
     "url": "git+ssh://git@github.com:SebastinSanty/litw-values.git"
   },
   "author": "",
   "license": "ISC",
   "homepage": "https://github.com/SebastinSanty/litw-values/tree/master#readme",
+========
+    "url": "git@github.com:labinthewild/litws-fameline.git"
+  },
+  "author": "The LabintheWild Team",
+  "license": "MIT",
+  "homepage": "https://github.com/labinthewild/litws-fameline",
+>>>>>>>> v2-dev-base:src/frame-line/package.json
   "description": "",
   "devDependencies": {
     "webpack-cli": "^5.0.1"
