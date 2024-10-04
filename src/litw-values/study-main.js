@@ -11,40 +11,57 @@
  * the code, contact us at info@labinthewild.org
  *************************************************************/
 
-// load webpack modules
-window.$ = window.jQuery = require("jquery");
+window.$ = require("jquery");
+window.jQuery = window.$;
 require("../js/jquery.i18n");
 require("../js/jquery.i18n.messagestore");
-require("bootstrap");
 require("jquery-ui-bundle");
-require("alpaca");
-require("handlebars");
-var _ = require('lodash');
+let Handlebars = require("handlebars");
+window.$.alpaca = require("alpaca");
+window.bootstrap = require("bootstrap");
+window._ = require("lodash");
 import * as d3_csv from "d3-fetch";
-var LITW_STUDY_CONTENT= require("./src/data");
-var introTemplate = require("./pages/introduction.html");
-var irbTemplate = require("./pages/irb.html");
-var demographicsTemplate = require("./pages/demographics.html");
-var valuesTemplate = require("./pages/values.html");
-var conversationTemplate = require("./pages/ai_conversation.html");
-var impressionsTemplate = require("./pages/postStudyQuest.html");
-var loadingTemplate = require("./pages/loading.html");
-var progressTemplate = require("./pages/progress.html");
-var commentsTemplate = require("./pages/comments.html");
-var resultsTemplate = require("./pages/resultsValuesMap.html");
-var resultsFooter = require("./pages/results-footer.html");
+
+// var LITW_STUDY_CONTENT= require("./src/data");
+//LOAD THE HTML FOR STUDY PAGES
+import progressHTML from "../templates/progress.html";
+Handlebars.registerPartial('prog', Handlebars.compile(progressHTML));
+import introHTML from "./pages/introduction.html";
+import irb_LITW_HTML from "../templates/irb2-litw.html";
+import demographicsHTML from "../templates/demographics.html";
+import loadingHTML from "../templates/loading.html";
+import resultsHTML from "./pages/resultsValuesMap.html";
+import resultsFooterHTML from "../templates/results-footer.html";
+import commentsHTML from "../templates/comments.html";
+import valuesHTML from "./pages/values.html";
+import convoHTML from "./pages/ai_conversation.html";
+import impressionHTML from "./pages/postStudyQuest.html";
+
 require("../js/litw/jspsych-display-slide");
+//CONVERT HTML INTO TEMPLATES
+let introTemplate = Handlebars.compile(introHTML);
+let irbLITWTemplate = Handlebars.compile(irb_LITW_HTML);
+let demographicsTemplate = Handlebars.compile(demographicsHTML);
+let loadingTemplate = Handlebars.compile(loadingHTML);
+let resultsTemplate = Handlebars.compile(resultsHTML);
+let resultsFooterTemplate = Handlebars.compile(resultsFooterHTML);
+let commentsTemplate = Handlebars.compile(commentsHTML);
+let valuesTemplate = Handlebars.compile(valuesHTML);
+let conversationTemplate = Handlebars.compile(convoHTML);
+let impressionsTemplate = Handlebars.compile(impressionHTML);
 
 module.exports = (function(exports) {
-
-	window.litwWithTouch = false;
-	//TODO: Global variables for data across slides... bad design! :(
-	var timeline = [],
-	params = {
+	const study_times= {
+			SHORT: 5,
+			MEDIUM: 10,
+			LONG: 15,
+		};
+	let timeline = [];
+	let params = {
 		study_id: '57ef9f1a-82a3-4ebf-9d47-10c12c7da10a',
 		currentProgress: 0,
 		study_recommendation: [],
-		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif", "./img/icon1.jpg"],
+		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif"],
 		participant_values: {},
 		values_data: null,
 		convo_data: null,
@@ -64,7 +81,10 @@ module.exports = (function(exports) {
 			IRB: {
 				name: "informed_consent",
 				type: "display-slide",
-				template: irbTemplate,
+				template: irbLITWTemplate,
+				template_data: {
+					time: study_times.MEDIUM
+				},
 				display_element: $("#irb"),
 				display_next_button: false
 			},
@@ -72,10 +92,14 @@ module.exports = (function(exports) {
 				name: "demographics",
 				type: "display-slide",
 				template: demographicsTemplate,
+				template_data: {
+					local_data_id: 'LITW_DEMOGRAPHICS'
+				},
 				display_element: $("#demographics"),
 				display_next_button: false,
 				finish: function(){
 					let dem_data = $('#demographicsForm').alpaca().getValue();
+					LITW.data.addToLocal(this.template_data.local_data_id, dem_data);
 					LITW.data.submitDemographics(dem_data);
 				}
 			},
@@ -143,20 +167,18 @@ module.exports = (function(exports) {
 
 	function configureStudy() {
 		generateAIConversation();
-		// ******* BEGIN STUDY PROGRESSION ******** //
 		timeline.push(params.slides.INTRO);
-		// timeline.push(params.slides.IRB);
-		// timeline.push(params.slides.DEMOGRAPHICS);
+		timeline.push(params.slides.IRB);
+		timeline.push(params.slides.DEMOGRAPHICS);
 		timeline.push(params.slides.VALUES_Q);
 		timeline.push(params.slides.AI_CONVO);
 		timeline.push(params.slides.AI_IMPRESSIONS);
-		// timeline.push(params.slides.COMMENTS);
+		timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
-		// ******* END STUDY PROGRESSION ******** //
 	}
 
 	function generateAIConversation() {
-		_.shuffle(params.convo_data.convo_data);
+		_.shuffle(params.convo_data);
 		for (let counter = 0; counter < params.convo_length_max; counter++ ){
 			let convo = params.convo_data.splice(0,2);
 			params.convo_snippets.push({
@@ -168,15 +190,6 @@ module.exports = (function(exports) {
 				a2:convo[1].snippeta
 			});
 		}
-	}
-
-	function startStudy() {
-		LITW.utils.showSlide("trials");
-		jsPsych.init({
-			timeline: timeline,
-			//on_finish: showResults,
-			display_element: $("#trials")
-		});
 	}
 
 	function showResultsValueMap() {
@@ -198,7 +211,7 @@ module.exports = (function(exports) {
 	}
 
 	function addResultsFooter(){
-		$("#results-footer").html(resultsFooter(
+		$("#results-footer").html(resultsFooterTemplate(
 			{
 				share_url: window.location.href,
 				share_title: $.i18n('litw-irb-header'),
@@ -216,7 +229,7 @@ module.exports = (function(exports) {
 		});
 	}
 
-	function initStudy() {
+	function startStudy() {
 		// generate unique participant id and geolocate participant
 		LITW.data.initialize();
 		// save URL params
@@ -228,17 +241,32 @@ module.exports = (function(exports) {
 		LITW.engage.getStudiesRecommendation(2, (studies_list) => {
 			params.study_recommendation = studies_list;
 		});
+		// initiate pages timeline
+		jsPsych.init({
+		  timeline: timeline
+		});
 	}
 
 	function startExperiment(){
+		//TODO These methods should be something like act1().then.act2().then...
+		//... it is close enough to that... maybe the translation need to be encapsulated next.
+		// get initial data from database (maybe needed for the results page!?)
+		//readSummaryData();
+
 		// determine and set the study language
 		$.i18n().locale = LITW.locale.getLocale();
 		var languages = {
-			'en': './src/i18n/en.json?v=1.0',
+			'en': './i18n/en.json?v=1.0',
+			'pt': './i18n/pt-br.json?v=1.0',
 		};
-		// ONLY ENGLISH IS AVAILABLE!!!
-		let toLoad = {};
-		toLoad['en'] = languages['en'];
+		//TODO needs to be a little smarter than this when serving specific language versions, like pt-BR!
+		var language = LITW.locale.getLocale().substring(0,2);
+		var toLoad = {};
+		if(language in languages) {
+			toLoad[language] = languages[language];
+		} else {
+			toLoad['en'] = languages['en'];
+		}
 		$.i18n().load(toLoad).done(
 			function() {
 				$('head').i18n();
@@ -247,15 +275,15 @@ module.exports = (function(exports) {
 				LITW.utils.showSlide("img-loading");
 				//start the study when resources are preloaded
 				jsPsych.pluginAPI.preloadImages(params.preLoad,
-					function() {
+					function () {
 						//TODO: This is a strange place to put this file loading!
-						d3_csv.csv("src/i18n/conversations-en.csv").then(function(data) {
+						d3_csv.csv("i18n/conversations-en.csv").then(function(data) {
 							params.convo_data = data;
-							initStudy();
 							configureStudy();
 							startStudy();
 						});
 					},
+
 					// update loading indicator
 					function (numLoaded) {
 						$("#img-loading").html(loadingTemplate({
