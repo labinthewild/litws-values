@@ -6,9 +6,9 @@
     "locale": "en",
     "message-documentation": "qqq"
   },
-  "litw-study-title": "How do your values compare to those expressed by a chatbot?",
-  "litw-study-subtitle": "Talk to an AI chatbot and compare your values.",
-  "litw-study-description": "...",
+  "litw-study-title": "How do your values compare to a chatbot?",
+  "litw-study-subtitle": "",
+  "litw-study-description": "Talk to an AI chatbot and compare your values. This study takes less than 10 minutes.",
   "litw-study-intro-button": "Start now!",
   "litw-progress-bar-label": "Study Completion",
   "litw-irb2-header": "Before we get started, here are a few things you should know...",

@@ -107,6 +107,11 @@ module.exports = (function(exports) {
 				name: "values_questionnaire",
 				type: "display-slide",
 				template: valuesTemplate,
+				template_data: {
+					progress : {
+						value: 0
+					}
+				},
 				display_element: $("#values"),
 				display_next_button: false,
 				finish: function(){
@@ -120,6 +125,11 @@ module.exports = (function(exports) {
 				name: "ai_conversation",
 				type: "display-slide",
 				template: conversationTemplate,
+				template_data: {
+					progress : {
+						value: 0
+					}
+				},
 				display_next_button: false,
 				display_element: $("#ai_convo"),
 				finish: function(){
@@ -131,6 +141,11 @@ module.exports = (function(exports) {
 				name: "ai_impressions",
 				type: "display-slide",
 				template: impressionsTemplate,
+				template_data: {
+					progress : {
+						value: 0
+					}
+				},
 				display_next_button: false,
 				display_element: $("#impressions"),
 				finish: function(){
@@ -170,8 +185,11 @@ module.exports = (function(exports) {
 		timeline.push(params.slides.INTRO);
 		timeline.push(params.slides.IRB);
 		timeline.push(params.slides.DEMOGRAPHICS);
+		params.slides.VALUES_Q.template_data.progress.value = 30;
 		timeline.push(params.slides.VALUES_Q);
+		params.slides.AI_CONVO.template_data.progress.value = 80;
 		timeline.push(params.slides.AI_CONVO);
+		params.slides.AI_IMPRESSIONS.template_data.progress.value = 100;
 		timeline.push(params.slides.AI_IMPRESSIONS);
 		timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
