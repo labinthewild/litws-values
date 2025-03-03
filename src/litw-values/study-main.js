@@ -10,6 +10,7 @@
  * For questions about this file and permission to use
  * the code, contact us at info@labinthewild.org
  *************************************************************/
+console.log("Entry point reached: study-main.js");
 
 window.$ = require("jquery");
 window.jQuery = window.$;
@@ -28,12 +29,13 @@ import progressHTML from "../templates/progress.html";
 Handlebars.registerPartial('prog', Handlebars.compile(progressHTML));
 import introHTML from "./pages/introduction.html";
 import irb_LITW_HTML from "../templates/irb2-litw.html";
-import demographicsHTML from "../templates/demographics.html";
+import demographicsHTML from "./pages/demographics.html";
 import loadingHTML from "../templates/loading.html";
 import resultsHTML from "./pages/resultsValuesMap.html";
 import resultsFooterHTML from "../templates/results-footer.html";
 import commentsHTML from "../templates/comments.html";
 import valuesHTML from "./pages/values.html";
+import attitudesTowardsAiHTML from "./pages/ai_impressions.html";
 import convoHTML from "./pages/ai_conversation.html";
 import impressionHTML from "./pages/postStudyQuest.html";
 
@@ -48,6 +50,7 @@ let resultsFooterTemplate = Handlebars.compile(resultsFooterHTML);
 let commentsTemplate = Handlebars.compile(commentsHTML);
 let valuesTemplate = Handlebars.compile(valuesHTML);
 let conversationTemplate = Handlebars.compile(convoHTML);
+let attitudesTowardsAiTemplate = Handlebars.compile(attitudesTowardsAiHTML);
 let impressionsTemplate = Handlebars.compile(impressionHTML);
 
 module.exports = (function(exports) {
@@ -65,6 +68,7 @@ module.exports = (function(exports) {
 		participant_values: {},
 		values_data: null,
 		convo_data: null,
+		attitudes_towards_AI_items:null,
 		impressions_data: null,
 		convo_length_max: 8,
 		convo_length_min: 4,
@@ -155,6 +159,27 @@ module.exports = (function(exports) {
 					LITW.data.submitStudyData(impressions_data);
 				}
 			},
+			Attitudes_towards_AI: {
+				name: "attitudes_towards_AI",
+				type: "display-slide",
+				template: attitudesTowardsAiTemplate,
+				// template_data: {
+				// 	progress : {
+				// 		value: 0
+				// 	}
+					
+				// },
+				display_next_button: false,
+				display_element: $("#attitudes_towards_AI"),
+				finish: function(){
+					var survey_data = $('#survey_template_km').alpaca().getValue();
+					console.log("reach finish function");
+					// survey_data['attitude_slide_time_elapsed'] = getSlideTime();
+					//  jsPsych.data.addProperties({demographics:dem_data});
+					LITW.data.submitStudyData(survey_data);
+				}
+        },
+
 			COMMENTS: {
 				name: "comments",
 				type: "display-slide",
@@ -185,6 +210,7 @@ module.exports = (function(exports) {
 		timeline.push(params.slides.INTRO);
 		timeline.push(params.slides.IRB);
 		timeline.push(params.slides.DEMOGRAPHICS);
+		timeline.push(params.slides.Attitudes_towards_AI);
 		params.slides.VALUES_Q.template_data.progress.value = 30;
 		timeline.push(params.slides.VALUES_Q);
 		params.slides.AI_CONVO.template_data.progress.value = 80;
@@ -193,6 +219,7 @@ module.exports = (function(exports) {
 		timeline.push(params.slides.AI_IMPRESSIONS);
 		timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
+
 	}
 
 	function generateAIConversation() {

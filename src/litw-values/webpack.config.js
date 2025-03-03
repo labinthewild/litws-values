@@ -1,3 +1,6 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+console.log("current dir:"+ __dirname);
+
 var path = require("path");
 
 var config = {
@@ -5,6 +8,7 @@ var config = {
   // mode: 'production',
   entry: path.join(__dirname, "study-main.js"),
   output: {
+    publicPath: "/",
     path: path.join(__dirname, "js"),
     filename: "bundle-litw-values.min.js"
   },

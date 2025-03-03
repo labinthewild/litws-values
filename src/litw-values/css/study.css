@@ -93,12 +93,12 @@
         -o-border-radius: 15px 15px 0px 15px;
         -ms-border-radius: 15px 15px 0px 15px;
         border-radius: 15px 15px 0px 15px;
-        background-color: #07D;
-        color: white;
+        background-color: #71aed2;
+        color: rgb(31, 27, 27);
     }
 
     .human-bg:before {
-        border-bottom: 9px solid #07D;
+        border-bottom: 9px solid rgb(151, 193, 234);
         border-right: 9px solid rgba(0, 0, 0, 0);
         position: absolute;
         bottom: 0;
@@ -110,12 +110,16 @@
         border: solid 2px #777;
         margin: 10px;
         height: 600px;
-        width: 500px;
+        width:49rem;
+        background-color: whitesmoke;
+        border-radius: 1rem;
     }
 
-    #convbox .row {
-
+    #convo_div{
+        justify-content: center;
     }
+
+
 
     #typebox {
         border: solid 2px #777;
@@ -123,8 +127,25 @@
     }
 
     #questions {
-        width: 500px;
+        width: 30rem;
+        padding-left: 1rem;
     }
+
+    #questions .btn.btn-primary {
+        background-color: #c0ddf7;
+        color: black;
+        border-color: white;
+    }
+
+    #questions .btn.btn-primary:hover {
+        background-color: #1c77ef;
+        color: rgb(249, 249, 249);
+        border-color: white;
+        transition: all 0.3s ease-in-out;
+    }
+    
+
+
 
     .lds-ellipsis {
             display: inline-block;
@@ -428,5 +449,22 @@
 
     .mrt-stimulus.mrt-q18-a4 {
         background: url(../img/mrt_stimuli.jpg) -640px -1600px;
+    }
+
+
+    .study-description {
+        font-size: 2rem;
+        color:#050505;
+        /* left aligned */
+        text-align: left;
+        /* space between lines */
+        line-height: 1.5;
+
+    }
+    /* set font to be responsive */
+    @media (max-width: 600px) {
+        .study-description {
+            font-size: 1.5rem;
+        }
     }
 

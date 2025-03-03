@@ -1,0 +1,186 @@
+/* Target the form container and change the background color */
+#form-container {
+  background-color: #f0f0f0;
+}
+
+#valuesForm {
+  padding-left: 4rem;
+  text-align: left; 
+  display: none
+}
+
+/* target question text and change the font and font size */
+#valuesForm .fs-6 {
+  font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+  font-size: 1.5rem;
+  color: #0b3954;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  display: flex;
+  margin-left: 5px;
+  margin-bottom: 0.5rem;
+  margin-top:0.5rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+#valuesForm .form-check-label {
+  color: #0b467a;
+  font-size: 1.2rem;
+  font-weight: 500;
+line-height: 1.5;
+}
+
+#valuesForm .form-check-input :hover {
+  color: #0f2d3e;
+  transition: all 0.3s ease-in-out;
+}
+
+
+#valuesForm .form-check-input {
+    margin-right: 0.5rem;
+    margin-top: 0.2rem;
+  border-color: #0b3954;
+  border-width: 0.1rem;
+}
+
+#valuesForm .box-column{
+    display: grid;
+    align-items: center;
+    justify-content: left;
+    margin-inline: 0.5rem;
+}
+
+#valuesForm .litw-flex-orientation {
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: space-around;
+    margin-inline: 0.5rem;
+}
+#valuesForm .value-form-option-digit {
+  color: #0b467a;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  display: flex;
+  margin-left: 5px;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: left;
+  margin:0.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+#valuesForm .value-form-option-digit:hover {
+  color: #0f2d3e;
+  background-color: aliceblue;
+  font-size: 1.6rem;
+  transition: all 0.3s ease-in-out;
+}
+
+#valuesForm .value-form-option {
+  color: #0b467a;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  display: flex;
+  margin-left: 5px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+  margin:0.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+#valuesForm .value-form-option:hover {
+  color: #0f2d3e;
+  background-color: aliceblue;
+  font-size: 1.6rem;
+  transition: all 0.3s ease-in-out;
+}
+
+
+/* make padding responsive when screen is smaller */
+@media screen and (max-width: 767px) {
+  #valuesForm {
+    padding-left: 0;
+  }
+}
+
+
+/* modify rateAIanswer form */
+#rate_AI_answer {
+  text-align: left; 
+  justify-content: left;
+  display: flex;
+  width: 100%;
+}
+
+
+#rate_AI_answer .label{
+  width: 100%;
+}
+/* modify button */
+#rate_AI_answer button {
+  background-color: #cbcdce;
+  color: rgb(23, 14, 14);
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: center;
+  margin:0.5rem;
+  cursor: pointer;
+  border-color:#fefeff
+}
+
+#rate_AI_answer button:hover {
+  background-color: #71aed2;
+  transition: all 0.3s ease-in-out;
+}
+
+#rate_AI_answer alpaca-form-buttons-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+#rate_AI_answer .alpaca-control.radio label{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 0.4rem;
+  padding: 0.3rem;
+}
+
+#rate_AI_answer .alpaca-control.radio label:hover {
+  background-color: #cadfeb;
+  transition: all 0.3s ease-in-out;
+}
+/* change radio button */
+#rate_AI_answer .alpaca-control.radio label input {
+  margin-right: 0.5rem;
+  width: 1.5rem;
+  transition: all 0.3s ease-in-out;
+}
+.feedback-box {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+

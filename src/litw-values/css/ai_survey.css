@@ -1,0 +1,81 @@
+
+/* Target the form container and change the background color */
+#form-container {
+    background-color: #f0f0f0;
+}
+
+/* Target the input fields and change the font and font size */
+
+#survey_template_km .alpaca-field-radio {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #0b3954;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap ;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+} 
+
+/*statement*/
+#survey_template_km .alpaca-field-radio .alpaca-control-label {
+    width : 100%;
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-family: "Open Sans", "Helvetica Neue", Arial;
+    margin-top: 2rem;
+}
+
+#survey_template_km .alpaca-field-radio .alpaca-control-label:first {
+    margin-top: 0;
+}
+/*statement response*/
+#survey_template_km .alpaca-field-radio div label {
+    width: 100%;
+    height: 100%;
+    margin: 0.5rem;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap ;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    color:#087e8b;
+    transition: all 0.3s ease-in-out;
+}
+
+/* .alpaca-field-radio div label  {
+    color: red;
+} */
+/* .alpaca-field-radio:nth-child(3) div label {
+    color: grey;
+}
+.alpaca-field-radio:nth-child(4) div label {    
+    color: green;
+}  */
+
+#survey_template_km .alpaca-field-radio div label:hover {
+    transform: scale(1.2);
+       
+}
+
+#survey_template_km .alpaca-field-radio div label input {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0.5rem;
+    transition: all 0.3s ease-in-out;
+}
+
+#survey_template_km .alpaca-field-radio div label input:hover {
+    transform: scale(1.2);   
+}
+#survey_template_km .alpaca-field-radio div label input:checked {
+    color: #0081a7;
+    accent-color: #0081a7;
+}
