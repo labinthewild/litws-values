@@ -191,7 +191,7 @@
          * hidden. NOTE: code adapted from the zen.js library.
          *
          * @function showSlide
-         * @param {string} id                                                            The HTML id of the element to show
+         * @param {string} id The HTML id of the element to show
          */
         showSlide = function (id) {
             $(properties.ajaxWorkingSelectors).hide();

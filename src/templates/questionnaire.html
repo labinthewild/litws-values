@@ -41,12 +41,6 @@
     TOTAL_Q = document.querySelectorAll('[data-type="question"]').length;
     responses = {}
 
-    $(document).ready(function() {
-        document.getElementById('submit').classList.add('invisible');
-        let elem = document.getElementById("bar");
-        elem.style.width = LITW.study.params.progressBarWidth + "%";
-    });
-
     function respondQuestion (qID, rID) {
         selectResponse(qID, rID);
         responses[qID] = rID;
