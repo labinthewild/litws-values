@@ -1,6 +1,3 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-console.log("current dir:"+ __dirname);
-
 var path = require("path");
 
 var config = {
