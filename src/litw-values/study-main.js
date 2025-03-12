@@ -22,6 +22,8 @@ import * as d3_csv from "d3-fetch";
 
 import * as litw_engine from "../js/litw/litw.engine.0.1.0";
 LITW.engine = litw_engine;
+import * as study_results from "./js/results/main.mjs";
+LITW.results = study_results;
 
 //LOAD THE HTML FOR STUDY PAGES
 import progressHTML from "../templates/progress.html";
@@ -240,19 +242,23 @@ module.exports = (function(exports) {
 
 	function showResultsValueMap() {
 		if(!config.values_data){
-			//TEST DATA
-			config.values_data = {q1:"1",q2:"2",q3:"3",q4:"4",q5:"3",q6:"2",q7:"1",q8:["uns","obd"],q9:"1",q10:"2",q11:"3"};
+  		//TEST DATA
+			config.values_data = {q1:"2",q2:"10",q3:"1",q4:"9",q5:"2",q6:"2",q7:"2",q8:[ 'img', 'tnrfop', 'dnp', 'uns' ],q9:"3",q10:"2",q11:"3"};
 		}
+  
+    let secu_sele = LITW.results.calculate_values_components(config.values_data);
 
 		let resultsData = {
-			results: JSON.stringify(config.values_data)
+			results: LITW.results.calculate_values_score(secu_sele.SECU, secu_sele.SELE)
 		}
 		if('PID' in LITW.data.getURLparams) {
   		resultsData.code = LITW.data.getParticipantId();
 		}
 
 		let recom_studies = [];
-		LITW.engage.getStudiesRecommendation(config.study_id, (studies) => {recom_studies = studies});
+		LITW.engage.getStudiesRecommendation(
+      config.study_id, (studies) => {recom_studies = studies}
+    );
     
     let results_div = $("#results");
 		results_div.html(
@@ -265,14 +271,14 @@ module.exports = (function(exports) {
 	}
 
 	function addResultsFooter(){
-		$("#results-footer").html(resultsFooterTemplate(
-			{
+		$("#results-footer").html(
+      resultsFooterTemplate({
 				share_url: window.location.href,
 				share_title: $.i18n('litw-irb-header'),
 				share_text: $.i18n('litw-template-title'),
 				more_litw_studies: config.study_recommendation
-			}
-		));
+			})
+    );
 	}
 
 	function bootstrap() {
