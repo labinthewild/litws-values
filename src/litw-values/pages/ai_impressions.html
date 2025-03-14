@@ -28,7 +28,7 @@
             [keySuffix]: {
                 "title": $.i18n(key),
                 //  Strongly Disagree, Somewhat Disagree, Neutral, Somewhat Agree, Strongly Agree, Prefer not to answer
-                "enum": ['Strongly disagree', 'Somewhat disagree', 'Neutral', 'Somewhat agree', 'Strongly agree', 'Prefer not to answer'],
+                "enum": ['Strongly disagree', 'Somewhat disagree', 'Neutral', 'Somewhat agree', 'Strongly agree'],
                 "required": true,
                 "default": "---",
                 "disallow": ["---"]
@@ -73,7 +73,7 @@
             let key = keysArray[index];
             surveyOptionsObj[key] = {
                 "type": "radio",
-                "optionLabels": ["Strongly Disagree", "Somewhat Disagree", "Neutral", "Somewhat Agree", "Strongly Agree", "Prefer not to answer"],
+                "optionLabels": ["Strongly Disagree", "Somewhat Disagree", "Neutral", "Somewhat Agree", "Strongly Agree"],
                 "hideInitValidationError": true,
                 "validator": validator,
                 "validate": true,

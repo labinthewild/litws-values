@@ -36,18 +36,19 @@
 }
 /*statement response*/
 #survey_template_km .alpaca-field-radio div label {
-    width: 100%;
+    width: auto;
     height: 100%;
     margin: 0.5rem;
     font-size: 1rem;
     display: flex;
-    flex-direction: row;
-    flex-wrap:wrap ;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    flex-wrap:nowrap ;
+    justify-content: start;
+    align-items: flex-start;
     align-content: center;
     color:#087e8b;
     transition: all 0.3s ease-in-out;
+    white-space: nowrap;
 }
 
 /* .alpaca-field-radio div label  {
