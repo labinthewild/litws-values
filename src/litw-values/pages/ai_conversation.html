@@ -91,6 +91,7 @@
     const FINAL_CONVO_VAL = 3;
     const MIN_CONVO_SIZE = LITW.study.params.convo_length_min;
     let convos = LITW.study.params.convo_snippets;
+    console.log("this is convos data:",convos)
     let current_convo = 1;
     let followup_msg = _.shuffle(_.range(5));
     let user_interrupted_convo = false;

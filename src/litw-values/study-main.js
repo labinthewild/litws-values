@@ -226,7 +226,10 @@ module.exports = (function(exports) {
 	}
 
 	function generateAIConversation() {
-		_.shuffle(config.convo_data);
+
+		// shuffle question array 
+		config.convo_data = _.shuffle(config.convo_data);
+
 		for (let counter = 0; counter < config.convo_length_max; counter++ ){
 			let convo = config.convo_data.splice(0,2);
 			config.convo_snippets.push({
