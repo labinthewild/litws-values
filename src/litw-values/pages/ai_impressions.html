@@ -63,8 +63,19 @@
 							"study-attitudes-towards-ai-q10",
 							"study-attitudes-towards-ai-q11",
 							"study-attitudes-towards-ai-q12"]
+        // randomize the questions before 
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+        }
+
+        shuffleArray(surveyQuestions); // Shuffle the array before processing
+        console.log("Survey questions",surveyQuestions)
         /* not the best hack to get the survey items from the page data */
-        const surveyItemsObj = surveyQuestions.map((key) => buildSurveyItemObj(key)).reduce((acc, curr) => ({...acc, ...curr}), {});
+        const surveyItemsArray = surveyQuestions.map(key => buildSurveyItemObj(key));
+        // const surveyItemsObj = surveyQuestions.map((key) => buildSurveyItemObj(key)).reduce((acc, curr) => ({...acc, ...curr}), {});
         console.log("Survey item object ",surveyItemsObj);
         // configure each statement for options to have the same settings
         const surveyOptionsObj = {};
