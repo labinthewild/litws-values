@@ -155,7 +155,7 @@
   "study-attitudes-towards-ai-q11": "When I think about AI, I have mostly positive feelings.",
   "study-attitudes-towards-ai-q12": "I would rather avoid technologies that are based on AI.",
   "study-convo-title": "Time to talk to our chatbot!",
-  "study-convo-instructions": "This small bot was trained to answer some deep questions only. We hope you're fine if the conversation turns to more substantive matters.",
+  "study-convo-instructions": "This small bot was trained to answer some deep questions only. We hope you're fine if the conversation turns to more substantive matters. Please select the questions that you would like to ask the AI below.",
   "study-convo-start-btn": "Start Conversation",
   "study-convo-start": "It's great to have a chance to work with you! I believe it is time for you to ask me questions about my worldviews.",
   "study-convo-done-btn": "I'm done talking to the AI, let’s just get on with the study.",
