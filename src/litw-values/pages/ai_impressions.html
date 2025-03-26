@@ -70,12 +70,12 @@
                 [array[i], array[j]] = [array[j], array[i]]; // Swap elements
             }
         }
-
-        shuffleArray(surveyQuestions); // Shuffle the array before processing
-        console.log("Survey questions",surveyQuestions)
+        const shuffledQuestions = [...surveyQuestions];
+        shuffleArray(shuffledQuestions); // Shuffle the array before processing
+        console.log("Shuffled questions",shuffledQuestions)
         /* not the best hack to get the survey items from the page data */
-        const surveyItemsArray = surveyQuestions.map(key => buildSurveyItemObj(key));
-        // const surveyItemsObj = surveyQuestions.map((key) => buildSurveyItemObj(key)).reduce((acc, curr) => ({...acc, ...curr}), {});
+        
+        const surveyItemsObj = shuffledQuestions.map((key) => buildSurveyItemObj(key)).reduce((acc, curr) => ({...acc, ...curr}), {});
         console.log("Survey item object ",surveyItemsObj);
         // configure each statement for options to have the same settings
         const surveyOptionsObj = {};
@@ -105,6 +105,7 @@
             "options": {
                 // load the configured options from above
                 "fields": surveyOptionsObj,
+                "order": shuffledQuestions
             },
             "postRender": function (control) {
                 $('#btn-next-page').attr('style', 'display:none;');

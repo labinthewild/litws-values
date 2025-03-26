@@ -55,8 +55,6 @@ line-height: 1.5;
 
 #valuesForm .litw-flex-orientation {
     display: flex;
-    flex-direction:row;
-    align-items: center;
     justify-content: space-around;
     margin-inline: 0.5rem;
 }
@@ -89,16 +87,37 @@ line-height: 1.5;
   font-weight: 500;
   line-height: 1.5;
   text-align: left;
-  display: flex;
+  justify-content: left;
+  margin:0.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  max-width: 25%;
+  height: 100%;
+}
+#valuesForm .value-form-option:hover {
+  color: #0f2d3e;
+  background-color: aliceblue;
+  font-size: 1.6rem;
+  transition: all 0.3s ease-in-out;
+}
+
+
+#valuesForm .value-form-option-2 {
+  color: #0b467a;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  /* display: flex;
   margin-left: 5px;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
   justify-content: left;
   margin:0.1rem;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
-#valuesForm .value-form-option:hover {
+#valuesForm .value-form-option-2:hover {
   color: #0f2d3e;
   background-color: aliceblue;
   font-size: 1.6rem;
