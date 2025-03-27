@@ -1,4 +1,6 @@
 *.log
+*.un~
+*.swp
 .DS_Store
 .idea
 __pycache__

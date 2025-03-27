@@ -14,30 +14,78 @@
 {{/if}}
 
 
-<div id="values-map" class="litw-results-chart"></div>
-
-<div class="container">
-  <div class="row row-cols-2">
-    <div class="col">
-        <span style="font-weight: bold" data-i18n="study-values-result-tv"></span>
-        <span data-i18n="study-values-result-tv-expl"></span>
+<div class="accordion pb-4" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne"
+                    onclick="LITW.tracking.recordClick('results:detail')"
+                    data-i18n="litw-results-detail-title">
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body pb-4">
+                <div id="results-main" class="container center-content p-0">
+                    <div id="values-map" class="litw-results-chart"></div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col">
-        <span style="font-weight: bold" data-i18n="study-values-result-sv"></span>
-        <span data-i18n="study-values-result-sv-expl"></span>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                    aria-controls="panelsStayOpen-collapseTwo" onclick="LITW.tracking.recordClick('results:explain')"
+                    data-i18n="litw-results-explain-title">
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+              <div class="accordion-body">
+                  <div id="results-explain" class="p-4">
+                    <div class="row row-cols-2">
+                      <div class="col">
+                        <span style="font-weight: bold" data-i18n="study-values-result-tv"></span>
+                        <span data-i18n="study-values-result-tv-expl"></span>
+                      </div>
+                      <div class="col">
+                        <span style="font-weight: bold" data-i18n="study-values-result-sv"></span>
+                        <span data-i18n="study-values-result-sv-expl"></span>
+                      </div>
+                    </div>
+                    <div class="row row-cols-2 mt-3">
+                      <div class="col">
+                        <span style="font-weight: bold" data-i18n="study-values-result-srv"></span>
+                        <span data-i18n="study-values-result-srv-expl"></span>
+                      </div>
+                      <div class="col">
+                        <span style="font-weight: bold" data-i18n="study-values-result-sev"></span>
+                        <span data-i18n="study-values-result-sev-expl"></span>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+        </div>
     </div>
-  </div>
-  <div class="row row-cols-2 mt-3">
-    <div class="col">
-        <span style="font-weight: bold" data-i18n="study-values-result-srv"></span>
-        <span data-i18n="study-values-result-srv-expl"></span>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                    aria-controls="panelsStayOpen-collapseThree"
+                    onclick="LITW.tracking.recordClick('results:references')"
+                    data-i18n="litw-results-ref-title">
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <div id="results-references" class="p-4">
+                    <p data-i18n="litw-results-ref-p1"></p>
+                    <p data-i18n="litw-results-ref-p2"></p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col">
-        <span style="font-weight: bold" data-i18n="study-values-result-sev"></span>
-        <span data-i18n="study-values-result-sev-expl"></span>
-    </div>
-  </div>
 </div>
+
 
 <br>
 <div id="results-footer"></div>
