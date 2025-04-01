@@ -7,7 +7,7 @@
 /* Target the input fields and change the font and font size */
 
 #survey_template_km .alpaca-field-radio {
-    font-family: Arial, sans-serif;
+    font-family: Optima, Arial, sans-serif;;
     font-size: 14px;
     color: #0b3954;
     font-weight: 600;
@@ -27,7 +27,7 @@
     width : 100%;
     font-size: 1.2rem;
     font-weight: 500;
-    font-family: "Open Sans", "Helvetica Neue", Arial;
+    font-family: Optima, Arial, sans-serif;
     margin-top: 2rem;
 }
 

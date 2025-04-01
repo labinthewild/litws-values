@@ -6,7 +6,7 @@
 /* Target the input fields and change the font and font size */
 
 #demographicsForm .alpaca-control-label {
-  font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+  font-family: Optima, Arial, sans-serif;
   font-size: 1.1rem;
   color: #0b3954;
   font-weight: 500;
