@@ -38,7 +38,7 @@ import commentsHTML from "../templates/comments.html";
 import valuesHTML from "./pages/values.html";
 import attitudesTowardsAiHTML from "./pages/ai_impressions.html";
 import convoHTML from "./pages/ai_conversation.html";
-import impressionHTML from "./pages/postStudyQuest.html";
+import impressionHTML from "./pages/postAISurvey.html";
 
 //CONVERT HTML INTO TEMPLATES
 let introTemplate = Handlebars.compile(introHTML);
@@ -74,8 +74,8 @@ module.exports = (function(exports) {
 		convo_data: null,
 		attitudes_towards_AI_items:null,
 		impressions_data: null,
-		convo_length_max: 8,
-		convo_length_min: 4,
+		convo_length_max: 10,
+		convo_length_min: 10,
 		convo_snippets: [],
 		ai_impressions_before_task: false,
 		slides: {
