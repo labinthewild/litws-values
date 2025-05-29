@@ -157,9 +157,8 @@ module.exports = (function(exports) {
 				display_next_button: false,
 				display_element_id: "impressions",
 				finish: function(){
-					let impressions_data= {
-						ai_impressions: config.impressions_data
-					}
+					let impressions_data= $('#postConvoImpressions').alpaca().getValue();
+					console.log("submitting impressions data", impressions_data)
 					LITW.data.submitStudyData(impressions_data);
 				}
 			},
@@ -176,7 +175,8 @@ module.exports = (function(exports) {
 				display_next_button: false,
 				display_element_id: "attitudes_towards_AI",
 				finish: function(){
-					  let survey_data = $('#survey_template_km').alpaca().getValue();
+					  let survey_data = $('#attitudes').alpaca().getValue();
+					  console.log("submitting attitudes data...")
 					  LITW.data.submitStudyData(survey_data);
 				  }
         },
