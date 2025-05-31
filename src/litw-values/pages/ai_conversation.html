@@ -92,7 +92,7 @@
     const FINAL_CONVO_VAL = 10;
     const MIN_CONVO_SIZE = LITW.study.params.convo_length_min;
     let convos = LITW.study.params.convo_snippets;
-    console.log("this is convos data:",convos)
+    // console.log("this is convos data:",convos)
     let current_convo = 1;
     let followup_msg = _.shuffle(_.range(5));
     let user_interrupted_convo = false;
@@ -237,7 +237,7 @@
                         "click": function () {
                             let rate = this.getValue().rate;
                             convo_data[current_convo]["user_rating"] = rate;
-                            console.log("User rating for this response: ", rate);
+                            // console.log("User rating for this response: ", rate);
                             $("#rate_AI_answer").hide();
                             next_step();
                         }
@@ -280,7 +280,9 @@
       let convo_q_id = `q${current_convo}`;
       let convo_q = convos[current_convo - 1][`q${choice_num}`];
       let convo_a_id = `a${current_convo}`;
-      let convo_a = convos[current_convo - 1][`a${choice_num}`];
+      // let convo_a = convos[current_convo - 1][`a${choice_num}`];
+      let convo_a_raw = convos[current_convo - 1][`a${choice_num}`];
+      let convo_a = convo_a_raw?.trim().replace(/^"(.*)"$/, '$1');
 
 
       //ADD follow-up message every other question
@@ -339,7 +341,7 @@
           req_question();
         } else {
           show_message("bye", MSG_TIMEOUT, function () {
-          console.log("Bye has been raised! ")
+          // console.log("Bye has been raised! ")
           end_convo();
           });
         }

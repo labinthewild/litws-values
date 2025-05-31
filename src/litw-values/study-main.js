@@ -149,11 +149,6 @@ module.exports = (function(exports) {
 				name: "ai_impressions",
 				type: LITW.engine.SLIDE_TYPE.SHOW_SLIDE,
 				template: impressionsTemplate,
-				template_data: {
-					progress : {
-						value: 0
-					}
-				},
 				display_next_button: false,
 				display_element_id: "impressions",
 				finish: function(){
