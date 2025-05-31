@@ -280,7 +280,9 @@
       let convo_q_id = `q${current_convo}`;
       let convo_q = convos[current_convo - 1][`q${choice_num}`];
       let convo_a_id = `a${current_convo}`;
-      let convo_a = convos[current_convo - 1][`a${choice_num}`];
+      // let convo_a = convos[current_convo - 1][`a${choice_num}`];
+      let convo_a_raw = convos[current_convo - 1][`a${choice_num}`];
+      let convo_a = convo_a_raw?.trim().replace(/^"(.*)"$/, '$1');
 
 
       //ADD follow-up message every other question
