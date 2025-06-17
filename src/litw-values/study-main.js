@@ -75,7 +75,7 @@ module.exports = (function(exports) {
 		attitudes_towards_AI_items:null,
 		impressions_data: null,
 		convo_length_max: 10,
-		convo_length_min: 10,
+		convo_length_min: 5,
 		convo_snippets: [],
 		ai_impressions_before_task: false,
 		slides: {
@@ -208,13 +208,15 @@ module.exports = (function(exports) {
 		timeline.push(config.slides.INTRO);
 		timeline.push(config.slides.IRB);
 		timeline.push(config.slides.DEMOGRAPHICS);
+		config.slides.VALUES_Q.template_data.progress.value = 10;
 		timeline.push(config.slides.Attitudes_towards_AI);
 		config.slides.VALUES_Q.template_data.progress.value = 30;
 		timeline.push(config.slides.VALUES_Q);
 		config.slides.AI_CONVO.template_data.progress.value = 80;
 		timeline.push(config.slides.AI_CONVO);
-		config.slides.AI_IMPRESSIONS.template_data.progress.value = 100;
+		config.slides.AI_IMPRESSIONS.template_data.progress.value = 90;
 		timeline.push(config.slides.AI_IMPRESSIONS);
+		config.slides.AI_IMPRESSIONS.template_data.progress.value = 100;
 		timeline.push(config.slides.COMMENTS);
 		timeline.push(config.slides.RESULTS);
     return timeline;
