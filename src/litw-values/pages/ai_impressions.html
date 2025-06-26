@@ -13,14 +13,14 @@
     </div>
 </div>
 
-<div id="survey_template_km" style="text-align: left"></div>
+<div id="attitudes" class= "survey_template_km" style="text-align: left"></div>
     
 
 <script type="text/javascript">
 
 
     var buildSurveyItemObj = function(key){
-        console.log("buildSurveyItemObj", key)
+        // console.log("buildSurveyItemObj", key)
         /* Convert litw-decision-making-questions-vigilance-p1 to vigilance-p1 */
         const keySuffix = key.split('-').slice(1).join('-');
 
@@ -72,11 +72,11 @@
         }
         const shuffledQuestions = [...surveyQuestions];
         shuffleArray(shuffledQuestions); // Shuffle the array before processing
-        console.log("Shuffled questions",shuffledQuestions)
+        // console.log("Shuffled questions",shuffledQuestions)
         /* not the best hack to get the survey items from the page data */
         
         const surveyItemsObj = shuffledQuestions.map((key) => buildSurveyItemObj(key)).reduce((acc, curr) => ({...acc, ...curr}), {});
-        console.log("Survey item object ",surveyItemsObj);
+        // console.log("Survey item object ",surveyItemsObj);
         // configure each statement for options to have the same settings
         const surveyOptionsObj = {};
         const keysArray = Object.keys(surveyItemsObj);
@@ -95,7 +95,7 @@
             }
         };
 
-        $("#survey_template_km").alpaca({
+        $("#attitudes").alpaca({
             "data": false,
             "schema": {
                 "description": "LITW Project - Demographics",
@@ -113,7 +113,7 @@
                 $("input[type='text']").css('width', '200px');
 
                 const keys = Object.keys(surveyItemsObj);
-                console.log(keys);
+                // console.log(keys);
                 for (let index = 0; index < keys.length; index++) {
                     const key = keys[index];
                     const nextKey = keys[index + 1] || null;
