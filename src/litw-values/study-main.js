@@ -214,7 +214,7 @@ module.exports = (function(exports) {
 		config.slides.AI_CONVO.template_data.progress.value = 80;
 		timeline.push(config.slides.AI_CONVO);
 		timeline.push(config.slides.AI_IMPRESSIONS);
-		config.slides.AI_IMPRESSIONS.template_data.progress.value = 100;
+		// config.slides.AI_IMPRESSIONS.template_data.progress.value = 100;
 		timeline.push(config.slides.COMMENTS);
 		timeline.push(config.slides.RESULTS);
     return timeline;
