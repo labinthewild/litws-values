@@ -110,7 +110,7 @@
         border: solid 2px #777;
         margin: 10px;
         height: 600px;
-        width:49rem;
+        width:100%;
         background-color: whitesmoke;
         border-radius: 1rem;
     }
@@ -127,7 +127,7 @@
     }
 
     #questions {
-        width: 30rem;
+        width: 100%;
         padding-left: 1rem;
     }
 
